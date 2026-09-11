@@ -1,0 +1,83 @@
+\section{How CLUE3D works}
+\label{sec:clue3d}
+
+\cluethreed{} is the existing CMS algorithm that groups LayerClusters across
+calorimeter layers into Tracksters using the density-based idea of
+CLUE~\cite{Rovere2020clue}. We will summarize the ingredients needed to interpret
+the performance studies: its projected transverse distance, local density,
+and seed--follower assignment. The studies use the default HLT \cluethreed{}
+configuration without tuning for displaced showers, except where a parameter
+variation is explicitly stated. The transverse scales quoted below apply to
+silicon LayerClusters, which contain the electromagnetic shower core.
+
+\subsection{Neighbourhoods projected from the interaction point}
+
+Let LayerCluster $i$ have position $(x_i,y_i,z_i)$, transverse radius
+$r_i=\sqrt{x_i^2+y_i^2}$, azimuth $\phi_i$, layer index $\ell_i$, and energy
+$E_i$. The algorithm stores
+\begin{equation}
+  q_i=\frac{r_i}{|z_i|}.
+\end{equation}
+To compare a candidate $j$ with $i$, it projects $j$ onto the plane of $i$
+along the ray from the origin through $j$. The projected radius is
+\begin{equation}
+  r_{j\to i}=|z_i|q_j=\frac{|z_i|}{|z_j|}r_j.
+\end{equation}
+The squared transverse distance used by the implementation is then
+\begin{equation}
+  d_{XY}^2(i,j)=(r_i-r_{j\to i})^2
+                    +r_{j\to i}^{\,2}(\Delta\phi_{ij})^2,
+  \label{eq:clueprojective}
+\end{equation}
+where $\Delta\phi_{ij}$ is the azimuthal difference wrapped into
+$[-\pi,\pi]$. The second term uses the small-angle arc distance in azimuth.
+This is a distance evaluated on the reference layer, rather than the ordinary
+three-dimensional separation of the two LayerClusters; exchanging $i$ and
+$j$ changes the reference plane and can change its value, so $d_{XY}(i,j) \neq d_{XY}(j,i)$.
+
+Candidate searches are restricted to the same endcap, within three layers
+before and after the reference layer. They also use nearby position-based
+$(\eta,\phi)$ tiles: up to two tiles on either side for density estimation,
+and one for the nearest-higher search. These windows select candidates before
+the projected distance is evaluated.
+
+\subsection{Density and Trackster formation}
+
+The local density of LayerCluster $i$ is
+\begin{equation}
+  \rho_i=E_i+0.2\sum_{j\in\mathcal{N}_i}E_j,
+  \label{eq:cluedensity}
+\end{equation}
+where $\mathcal{N}_i$ contains candidate LayerClusters on other layers with
+$d_{XY}(i,j)<\dc$, and $\dc=\SI{1.8}{cm}$. The algorithm then finds the
+nearest higher-density candidate $h(i)$ on another layer, minimizing the
+projected transverse distance, and records
+$\delta_i=d_{XY}(i,h(i))$. This search can find neighbours beyond $\dc$;
+if none is found, the distance is treated as infinite.
+
+LayerClusters are classified as follows:
+\begin{itemize}
+  \item \textbf{Seeds} start new Tracksters. They require
+  $\rho_i\geq\rhoc=\SI{0.6}{GeV}$, a self-energy fraction
+  $E_i/\rho_i>0.15$, and separation from higher-density activity:
+  $\delta_i>\dm=\SI{1.8}{cm}$ or a nearest-higher layer separation exceeding
+  five layers. Within the three-layer search window, the latter condition
+  matters only when no higher neighbour is found.
+  \item \textbf{Outliers} have low density, $\rho_i<\rhoc$, and a distant
+  nearest-higher neighbour, $\delta_i>2\dm=\SI{3.6}{cm}$.
+  \item \textbf{Followers} are the remaining LayerClusters and inherit the
+  Trackster assignment of their nearest-higher neighbour, if one exists.
+\end{itemize}
+The density radius $\dc$ and seed distance $\dm$ are separate parameters,
+although both default to $\SI{1.8}{cm}$. The larger outlier threshold means
+that $\dm$ is not a universal maximum follower-link length.
+
+Starting from each seed, its Trackster index is propagated through the
+follower links (Fig.~\ref{fig:rechits-b}). Each assigned LayerCluster belongs
+wholly to one Trackster; clusters not connected to a seed remain unassigned.
+Outlier status propagates the same way: a follower whose nearest-higher chain
+terminates in an outlier rather than a seed is itself treated as an outlier.
+Candidates with fewer than two LayerClusters are removed. The barycentre,
+PCA direction and timing are computed after clustering, so the fitted shower
+direction does not enter the neighbour search. The next section examines the
+performance of this default algorithm on displaced photons.

@@ -1,0 +1,17 @@
+Long-lived particles can decay far from the beamline, producing photons whose
+trajectories do not point back to the interaction point. This breaks the
+assumption behind \cluethreed{}, the CMS clustering algorithm for the
+High-Granularity Calorimeter, which groups energy along directions projected
+from the origin. Using controlled single- and two-photon simulations, with and
+without pileup, I study how well such displaced photons are reconstructed as a
+function of their transverse displacement.
+
+I first explain geometrically why default \cluethreed{} loses displaced
+photons: its origin projection makes points on a single inclined shower appear
+transversely separated, so the shower fragments as displacement grows, while in
+two-photon events nearby showers merge. The main result is that alternative
+\cluestering{} metrics can do better, recovering displaced photons more
+completely while keeping neighbouring showers apart. Tuning of the coordinates,
+distance metrics and density settings is ongoing, but the results already point
+to a clustering better suited to non-pointing photons than the origin-projected
+default.

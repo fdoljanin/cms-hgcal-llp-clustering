@@ -1,0 +1,379 @@
+\section{CLUE3D performance for displaced photons}
+\label{sec:singlephoton}
+
+The central question of this project is whether \cluethreed{} can reconstruct
+a photon shower whose trajectory does not point back to the interaction
+point. The single-photon study reveals both performance loss
+and an unexpected structure: the loss develops in two stages, separated by a
+plateau. The evidence identifies fragmentation induced by the
+origin-based projection as the mechanism behind the observed loss.
+
+\subsection{The performance loss is not a smooth decline}
+
+The mechanism study uses single displaced photons without pileup, with Run4D121
+geometry and the default HLT \cluethreed{} configuration. The wide-range
+production samples $\R$ uniformly from $0$ to $\SI{350}{cm}$ and photon
+energy from $10$ to $\SI{250}{GeV}$, subject to the production- and
+target-surface constraints described in Section~\ref{sec:gun}. The initial
+investigation was used 50\,000-events, one event containing one displaced photon. Individual diagnostic
+plots impose their own requirements, stated where relevant, rather than
+necessarily containing identical numbers of objects.
+
+In addition to the efficiency of Section~\ref{sec:metrics}, I recorded the
+largest fraction of each SimTrackster's energy captured by any one
+reconstructed Trackster,
+\begin{equation}
+  f_{\max}(S)=\max_T\frac{E_{\mathrm{shared}}(S,T)}{E_S},
+  \label{eq:fmax}
+\end{equation}
+with zero assigned when there is no associated reconstructed object.
+Efficiency is the fraction of SimTracksters with $f_{\max}>0.5$; the mean
+$\langle f_{\max}\rangle$ measures energy recovery continuously, without
+reducing each shower to a pass or fail.
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/singlephoton_efficiency_thresholds.png}
+    \caption{Efficiency for several shared-energy requirements}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/singlephoton_mean_fraction.png}
+    \caption{Mean largest shared-energy fraction}
+  \end{subfigure}
+  \caption{Single-photon reconstruction without pileup. (a) Efficiency for
+  several shared-energy requirements; the black curve is the standard
+  $f_{\max}>0.5$. (b) Mean $f_{\max}$, showing the two-stage loss and the
+  intermediate plateau. Shaded bands are approximate slope regions.}
+  \label{fig:singlephotonperformance}
+\end{figure*}
+
+Figure~\ref{fig:singlephotonperformance} shows that the standard efficiency is
+close to unity at small displacement, falls to roughly $85\%$ in the
+intermediate region, and reaches about $20\%$ near the end of the scan.
+The mean captured fraction makes the structure particularly clear:
+it stays near $0.92$ up to approximately $\R=\SI{180}{cm}$, falls to
+about $0.78$ over $180$--$\SI{220}{cm}$, remains near that value to about
+$\SI{270}{cm}$, and then falls steeply to roughly $0.38$ near
+$\SI{350}{cm}$.
+
+The intermediate plateau was the main puzzle. Increasing the displacement
+should progressively violate the pointing assumption, yet the reconstruction
+temporarily stops deteriorating. Varying the
+shared-energy requirement changes the numerical efficiency and the visibility
+of the plateau. However, the two-stage loss remains in the continuous mean
+$f_{\max}$, so it cannot be explained by the choice of the $0.5$
+efficiency threshold.
+
+\subsection{Testing geometric explanations}
+
+\begin{figure*}[!tp]
+  \centering
+  \includegraphics[width=0.98\textwidth]{figures/singlephoton_split_R297.png}
+  \caption{A single photon at $\R\simeq\SI{297}{cm}$ split into five
+  reconstructed Tracksters. LayerClusters versus layer index in position-based
+  $\eta$, $\phi$, $x$, $y$ and $r/z$; colour identifies the reconstructed
+  Trackster and marker size the energy. Outlined markers belong to the target
+  SimTrackster, grey markers are unassigned, and the angular panels include
+  tile boundaries. The shower core stays continuous in physical space while its
+  assignment changes repeatedly.}
+  \label{fig:singlephotonsplit}
+\end{figure*}
+
+I first investigated whether the limited $(\eta,\phi)$ tile search could lose
+LayerClusters from the same shower, since a displaced shower does not keep a
+constant $(\eta,\phi)$ from layer to layer and its LayerClusters could drift out
+of the search window. The event displays and distributions of
+layer-to-layer angular steps did not support this as the main explanation.
+Across the full displacement scan, even the largest single-layer step of a
+shower stays well below the tile reach (Fig.~\ref{fig:layerstep}), so the
+neighbour always falls inside the tile search. The distinction matters: the
+candidate can be found by the tile search and still be too distant under the
+projected metric.
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/singlephoton_layerstep_eta.png}
+    \caption{Largest single-layer step in $\eta$.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/singlephoton_layerstep_phi.png}
+    \caption{Largest single-layer step in $\phi$.}
+  \end{subfigure}
+  \caption{Sample-wide test of the tiling explanation. For each shower, the
+  largest angular step between consecutive high-energy layers---the worst hop
+  the tile search must bridge---versus $\R$ (quantiles $q=0.2$--$0.8$). The
+  dashed line is the nearest-higher tile reach ($\pm1$ tile); the density reach
+  ($\pm2$ tiles) is off scale. Even the worst hop stays well within the tile
+  reach at every displacement, so lost LayerClusters cannot be blamed on the
+  $(\eta,\phi)$ tiling and must arise from the projected distance metric.}
+  \label{fig:layerstep}
+\end{figure*}
+
+Figure~\ref{fig:singlephotonsplit} illustrates this directly. At
+$\R\simeq\SI{297}{cm}$, one SimTrackster is split into five reconstructed
+Tracksters, and the largest shared-energy fraction is only $0.21$. The
+successive colours follow different longitudinal pieces of a continuous
+shower core. Several changes of colour occur while the core remains within
+one $\phi$ tile. This is fragmentation of one shower, not five independently
+produced photons, and---consistent with the sample-wide picture of
+Fig.~\ref{fig:layerstep}---no tile boundary is crossed.
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/singlephoton_phi_alignment.png}
+    \caption{Separation by azimuthal alignment}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/singlephoton_mean_fraction_alpha.png}
+    \caption{Mean captured fraction versus $\alphainc$}
+  \end{subfigure}
+  \caption{Checks of trajectory mixing. (a) Aligned ($|\Delta\phi|<15^\circ$)
+  and oppositely oriented ($|\Delta\phi|>120^\circ$) photons, with $\Delta\phi$
+  between the origin at $z=0$ and the target-plane position; the aligned subset
+  still shows the intermediate plateau. (b) The same observable versus the
+  non-pointing angle $\alphainc$, with a shorter plateau. The gun's surface
+  constraints correlate $\R$ and $\alphainc$.}
+  \label{fig:singlephotonmixing}
+\end{figure*}
+
+\begin{figure*}[!tp]
+  \centering
+  \includegraphics[width=0.98\textwidth]{figures/singlephoton_fraction_by_alpha_regime.png}
+  \caption{Mean captured fraction versus $\R$, split into three non-pointing
+  bands: flat ($\alphainc<29^\circ$), gentle drop ($29^\circ\leq\alphainc<49^\circ$)
+  and steep drop ($49^\circ\leq\alphainc<57^\circ$). The grey curve is the
+  full-sample average in each panel. The ``flat~2'' plateau near
+  $\R\simeq\SI{250}{cm}$ persists in the $29^\circ$--$49^\circ$ band, so it is
+  not an averaging artefact.}
+  \label{fig:singlephotonalpharegime}
+\end{figure*}
+
+% Let the preceding diagnostic figures catch up with their discussion.
+\newpage
+A second possibility was that scalar $\R$ mixes different trajectory
+orientations. I separated photons by the azimuthal difference between their
+back-extrapolated origin and their position at the target plane. The aligned
+and oppositely oriented populations do have different captured fractions at
+the same $\R$, but the plateau survives within the aligned population
+(Fig.~\ref{fig:singlephotonmixing}). Mixing these populations therefore does
+not create the feature. Binning in $\alphainc$ also reveals a short plateau,
+around $41^\circ$--$44^\circ$, followed by a strong decline. A further split
+into broad $\alphainc$ ranges retained the flat-$\R$ region within the
+$29^\circ\leq\alphainc<49^\circ$ group (Fig.~\ref{fig:singlephotonalpharegime}).
+These checks show that the feature
+survives changes of projection and sample subdivision, while also establishing
+that $\R$ alone does not specify every aspect of the trajectory.
+
+\subsection{The geometric origin of the growing distance}
+
+The projected distance of Section~\ref{sec:clue3d} suggests a direct mechanism.
+For a straight trajectory on the positive endcap, write its transverse
+position as
+\begin{equation}
+  \mathbf{x}_{\perp}(z)=\mathbf{b}+z\mathbf{a},
+  \qquad \R=|\mathbf{b}|,
+  \label{eq:displacedline}
+\end{equation}
+where $\mathbf{a}$ is the transverse slope and $\mathbf{b}$ the intercept at
+$z=0$. For a pointing trajectory $\mathbf{b}=0$: both $r/z$ and $\phi$ are
+constant along the ideal shower axis. For a displaced trajectory,
+$\mathbf{x}_{\perp}(z)/z=\mathbf{a}+\mathbf{b}/z$ changes with depth, as the
+$r/z$ panel of Fig.~\ref{fig:singlephotonsplit} demonstrates for a real shower.
+
+Projecting a point on layer $j$ to layer $i$ along a ray from the interaction
+point gives
+\begin{equation}
+  \mathbf{x}^{\mathrm{proj}}_{j\to i}
+    =\frac{z_i}{z_j}\mathbf{x}_{\perp}(z_j).
+\end{equation}
+Subtracting this projected position from the true position on layer $i$
+cancels the slope term exactly:
+\begin{align}
+  \Delta\mathbf{x}_{ij}
+    &=\mathbf{x}_{\perp}(z_i)-\mathbf{x}^{\mathrm{proj}}_{j\to i}\\
+    &=\mathbf{b}\left(1-\frac{z_i}{z_j}\right)
+     =\mathbf{b}\frac{z_j-z_i}{z_j}.
+  \label{eq:projectionerror}
+\end{align}
+Thus the exact Cartesian offset between ideal axis points is
+$|\Delta\mathbf{x}_{ij}|=\R|z_j-z_i|/z_j$. For neighbouring layers, and
+using the small-angle transverse metric implemented in \cluethreed{},
+\begin{equation}
+  \boxed{d_{XY}(i,j)\simeq\R\frac{|\Delta z|}{z}.}
+  \label{eq:displacedscale}
+\end{equation}
+There is a distinction between the exact vector relation and the approximate
+$d_{XY}$ relation: the code uses radial and azimuthal
+components, and actual LayerClusters fluctuate around the ideal axis.
+
+Equation~\eqref{eq:displacedscale} explains why the distance grows with both
+displacement and layer separation even for a perfectly straight photon.
+It also gives the approximate scale at which a link exceeds the critical
+distance,
+\begin{equation}
+  \R_{\mathrm{crit}}\simeq\frac{\dm z}{|\Delta z|}.
+  \label{eq:criticaldisplacement}
+\end{equation}
+This supplies a prediction to test against the observed regions. It does not
+by itself predict the full efficiency: whether a particular LC becomes a new
+seed also depends on its local density, its self-energy fraction and the
+available higher-density candidates.
+
+\subsection{A promising radial-only explanation}
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}[t]{0.54\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,trim=0 0 0 25bp,clip]{figures/singlephoton_radial_distance.png}
+    \caption{Radial component alone: a misleading alignment}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.43\textwidth}
+    \centering
+    % Crop only the layer-51 panel from the original five-panel display.
+    \includegraphics[width=\linewidth,trim=420bp 335bp 417bp 89bp,clip]{figures/singlephoton_neighbourhood_R297.png}
+    \caption{A new fragment in the full projected plane}
+  \end{subfigure}
+  \caption{Distinguishing a suggestive correlation from the clustering
+  decision. (a) Radial offsets for representative shower-core LCs separated by
+  $d$ layers; the apparent alignment of the $d=3$ and $d=2$ crossings with the
+  two declines omits the azimuthal contribution to the algorithm's distance.
+  (b) A neighbourhood in the full projected coordinates for the
+  $\R\simeq\SI{297}{cm}$ event: the star marks the layer-51 core of a new
+  fragment, the cross a same-shower LC on the preceding layer, and the circles
+  the $1.8$ and $\SI{3.6}{cm}$ scales.}
+  \label{fig:singlephotonradial}
+\end{figure*}
+
+The first comparison with the layer-gap distances looked particularly
+promising. I selected the most energetic LC on each layer,
+retained it if its energy exceeded $\SI{1}{GeV}$, and compared pairs separated
+by $d=1,2,3$ layers. SimTracksters were required to contain at least four LCs.
+In the radial component alone, the mean $d=3$ offset reaches
+$\SI{1.8}{cm}$ near the first performance decline, and the mean $d=2$ offset
+reaches it near the final decline (Fig.~\ref{fig:singlephotonradial}). This
+suggested an appealing explanation in which successively shorter links were
+lost as displacement increased.
+
+However, that particular assignment of the two declines does not survive
+using the actual distance in the algorithm. The azimuthal term also
+contributes to $d_{XY}$; it is not consistently negligible. Once both
+components are included, the crossing positions change. The radial-only alignment was therefore insufficient evidence: the relevant
+comparison had to use the full projected distance and identify which
+higher-density neighbours were associated with actual new seeds.
+
+The local displays illustrate why the full distance matters. In
+Fig.~\ref{fig:singlephotonradial}(b), the marked same-shower LC on the
+preceding layer lies $\SI{1.82}{cm}$ from the new fragment's core in
+projected coordinates, just outside the critical circle. This shows how
+neighbouring pieces of a continuous shower can fall on opposite sides of the
+distance criterion.
+
+\subsection{The two-layer transition explains the first loss}
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth,trim=0 0 0 31bp,clip]{figures/singlephoton_pair_distance.png}
+    \caption{Full projected distance for core-LC pairs}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/singlephoton_seed_energy.png}
+    \caption{Reconstructed energy in additional seeded fragments}
+  \end{subfigure}
+  \caption{The connection between the geometric threshold and fragmentation.
+  (a) Mean full projected distance for the same core-LC pairs as in the
+  radial-only comparison. (b) Full reconstructed energy in Tracksters whose
+  target-owned seed has a higher-density candidate beyond $\SI{1.8}{cm}$,
+  normalized to the SimTrackster energy and separated by the layer gap $d$ to
+  that candidate. The $d=2$ crossing in (a) coincides with the sharp rise of
+  the $d=2$ contribution in (b). The geometric pairs in (a) need not be the
+  chosen nearest-higher links.}
+  \label{fig:singlephotongaps}
+\end{figure*}
+
+The decisive connection is shown in Fig.~\ref{fig:singlephotongaps}.
+Near $\R\simeq\SI{200}{cm}$, the mean full projected distance for
+$d=2$ pairs crosses $\SI{1.8}{cm}$. At the same time, the energy carried by reco
+Tracksters which failed to follow nearestHigher $d=2$ layers away rises sharply. This connects the geometric threshold to the objects that
+actually remove energy from the best reconstructed match.
+
+Panel (b) isolates those fragments: for each reconstructed Trackster whose seed lies beyond the $\SI{1.8}{cm}$ threshold from
+its higher-density neighbour, I sum the full Trackster energy---the seed and all
+its followers---and normalize it to the shower energy in each $\R$ bin,
+separated by the layer gap $d$ to that neighbour.
+
+The two-layer contribution rises from almost zero to roughly $15\%$ of the
+reference shower energy through the first decline. It then levels off over
+approximately the same displacement range as the plateau in
+$\langle f_{\max}\rangle$. The plateau therefore corresponds to a region
+where this newly important source of fragmentation has largely stabilized,
+before the next one becomes dominant. At larger displacement, the green
+$d=1$ contribution rises rapidly and drives the second, stronger loss of
+captured energy.
+
+This also explains why the distance plot alone was not enough. Three-layer
+pairs cross $\SI{1.8}{cm}$ earliest, but add little seeded energy, because a
+closer higher-density neighbour can still catch the LayerCluster and prevent a
+split. And although the mean one-layer distance stays below $\SI{1.8}{cm}$ for
+the whole scan, individual one-layer links still exceed it and produce the
+observed contribution. The distance plot therefore only sets the geometric
+scale; it is the seed-resolved energy that shows which crossings actually cause
+fragmentation, and together they explain the first decline, the plateau and the
+second decline.
+
+\subsection{A controlled change of the critical distance}
+
+To test whether this decision actually causes the loss, I reran the HLT
+reconstruction on the same sample with the critical distance raised from
+$\dm=\SI{1.8}{cm}$ to $\SI{2.1}{cm}$, leaving the density radius at
+$\dc=\SI{1.8}{cm}$ (the outlier distance, twice $\dm$, rises automatically to
+$\SI{4.2}{cm}$).
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/singlephoton_ablation_fraction.png}
+    \caption{Captured energy: default and modified reconstruction}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/singlephoton_ablation_seed_energy.png}
+    \caption{Seeded-fragment energy with $\dm=\SI{2.1}{cm}$}
+  \end{subfigure}
+  \caption{The controlled $\SI{2.1}{cm}$ experiment. (a) Captured energy for
+  the default and modified reconstruction, from the same generated sample.
+  (b) Seeded-fragment energy, defined as in Fig.~\ref{fig:singlephotongaps}(b),
+  showing a later $d=2$ rise and a strongly reduced $d=1$ contribution---the
+  shift to larger $\R$ predicted by Eq.~\eqref{eq:criticaldisplacement}. Its
+  vertical scale differs from the default. Shading describes the modified
+  regimes rather than predicting boundaries.}
+  \label{fig:singlephotonablation}
+\end{figure*}
+
+The point is not that a larger $\dm$ gives higher efficiency, but that the same
+explanation should still predict \emph{where} the degradation happens. For
+$\dm=\SI{2.1}{cm}$, Eq.~\eqref{eq:criticaldisplacement} places the $d=2$
+threshold crossing at a larger displacement, so that stage of fragmentation
+should set in later---and it does: the two-layer seeded contribution turns on at
+larger $\R$, with the captured fraction and efficiency changing
+accordingly (Fig.~\ref{fig:singlephotonablation}(a)).
+
+This explains the mechanism. The origin-based projection pushes apart LCs of the
+same displaced shower; as displacement grows, their projected distance crosses
+$\dm$ in stages, creating extra seeds whose followers
+become separate Tracksters and drain energy from the best match. Changing $\dm$
+moves that fragmentation to exactly the displacement the same equation
+predicts---so the loss is caused by the parameter the geometry implicated, not
+merely correlated with displacement.
+
+This is a mechanism test, not a tuning of \cluethreed{}: a larger distance can
+also merge activity from different showers, so it must be checked with nearby
+photons and pileup. Still, the single-photon study pins the degradation to a
+concrete mismatch between the shower geometry and the algorithm's origin-based
+distance.

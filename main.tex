@@ -1,0 +1,106 @@
+\documentclass[twocolumn,10pt]{article}
+
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\captionsetup{font=small,skip=6pt}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+
+% This TeX tree lacks the TS1 (text-companion) metrics for Computer Modern and
+% cannot render Latin Modern Type1 fonts, so redirect any TS1 request to the
+% classic CM roman that is present. We emit no genuine TS1 glyphs, so this only
+% suppresses spurious font-loading errors.
+\DeclareFontFamily{TS1}{cmr}{}
+\DeclareFontShape{TS1}{cmr}{m}{n}{<-> cmr10}{}
+\DeclareFontShape{TS1}{cmr}{m}{it}{<-> cmti10}{}
+\DeclareFontShape{TS1}{cmr}{bx}{n}{<-> cmbx10}{}
+
+% Draw itemize markers from the available Computer Modern math-symbol font.
+\renewcommand{\labelitemi}{\ensuremath{\bullet}}
+
+% --- float placement / vertical spacing (layout only) ---
+% Let floats occupy more of a page and avoid near-empty float pages, and stop
+% the two-column default (\flushbottom) from stretching sparse columns with
+% large inter-paragraph gaps.
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.75}
+\renewcommand{\dbltopfraction}{0.95}
+\renewcommand{\dblfloatpagefraction}{0.72}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{3}
+% Pack float-only pages from the top instead of stretching the gaps.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{12pt}
+\setlength{\@dblfptop}{0pt}
+\setlength{\@dblfpsep}{12pt}
+\makeatother
+% Keep float-to-text gaps compact without squeezing captions or plot labels.
+\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{12pt plus 2pt minus 2pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlength{\dblfloatsep}{10pt plus 2pt minus 2pt}
+\raggedbottom
+
+% --- lightweight siunitx replacement (siunitx not installed here) ---
+% \SI{value}{unit} -> value + thin space + unit, works in text and math.
+\providecommand{\SI}[2]{\mbox{#1\,#2}}
+\providecommand{\num}[1]{\mbox{#1}}
+
+% --- convenience macros (consistent notation across the paper) ---
+\newcommand{\R}{\ensuremath{R}}                 % displacement radius
+\newcommand{\alphainc}{\ensuremath{\alpha}}     % non-pointing / incidence angle
+\newcommand{\dc}{\ensuremath{d_{c}}}            % CLUE density radius
+\newcommand{\rhoc}{\ensuremath{\rho_{c}}}       % CLUE seed density
+\newcommand{\dm}{\ensuremath{d_{m}}}            % CLUE max distance to higher
+\newcommand{\dxy}{\ensuremath{d_{XY}}}          % projective transverse distance
+\newcommand{\clue}{CLUE}
+\newcommand{\cluethreed}{CLUE3D}
+\newcommand{\cluestering}{CLUEstering}
+
+\title{\vspace{-2em}\bfseries Reconstruction of long-lived particles\\ with the CLUE algorithm in CMS}
+\author{Frane Doljanin\\
+  \small\textit{CERN Summer Student Programme}\\
+  \small\textit{Supervisor: Bruno Alves, CERN, Experimental Physics Department}}
+\date{\today}
+
+\begin{document}
+
+% Full-width title + abstract across both columns
+\twocolumn[
+  \begin{@twocolumnfalse}
+    \maketitle
+    \begin{abstract}
+      \noindent
+      \input{sections/00_abstract}
+    \end{abstract}
+    \vspace{1.5em}
+  \end{@twocolumnfalse}
+]
+
+\input{sections/01_introduction}
+\input{sections/02_displacement}
+\input{sections/03_displaced_photon_gun}
+\input{sections/04_metrics}
+\input{sections/05_clue3d}
+\input{sections/06_single_photon_performance}
+
+\input{sections/07_two_photon_merging}
+\input{sections/08_pileup_performance}
+\input{sections/09_cluestering}
+\input{sections/10_conclusions}
+
+\input{sections/11_acknowledgements}
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+\end{document}

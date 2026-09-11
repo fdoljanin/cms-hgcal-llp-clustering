@@ -1,0 +1,53 @@
+\section{Conclusions}
+\label{sec:conclusions}
+
+This project looked at how HGCAL clustering behaves when photons no
+longer point back to the interaction point, and which specific
+reconstruction features cost performance. Along the way I improved the displaced-particle gun, added displacement and timing observables
+to the CMSSW validation, made the association thresholds configurable, and
+produced the two-dimensional performance maps used throughout. Comparing
+shower-axis estimators gave an approximately \SI{10}{cm} resolution on the
+back-extrapolated displacement of the most energetic Trackster. Small fragments do
+much worse than this, so it should not be read as a number that describes every
+reconstructed object.
+
+A large part of the work went into explaining why default \cluethreed{} loses
+single displaced photons. Because it projects everything from the origin, two points
+on the same shower axis look transversely separated by roughly $R|\Delta z|/z$,
+and this apparent separation grows with displacement. The loss comes in two
+stages: around $R=\SI{200}{cm}$ the energy carried by fragments whose
+nearest-higher link skips two layers rises and then levels off, which produces
+the intermediate plateau, and at larger displacement one-layer breaks take over
+and drive the final decline. Widening the seed distance from
+\SI{1.8}{cm} to \SI{2.1}{cm}, with the density radius fixed, pushes the
+fragmentation out to larger displacement and recovers substantially more of the
+shower.
+
+The two-photon studies make the case that energy recovery cannot be judged on
+its own. For photons \SI{4}{cm} apart, the energy linked across the two showers
+keeps rising with displacement even where the object-based merge rate is
+falling, so fragmentation can make the merge rate look better while the mixing
+underneath is getting worse. In PU200 the injected signal photon behaves much
+as it does without pileup. The inclusive truth population is a different story:
+its particle mix, kinematics and shower sizes all shift with resolved
+displacement, and charged particles bend in the magnetic field, so its
+displacement curve cannot be read as a clean scan of production radius.
+
+Comparing metrics through \cluestering{} showed both promise and limits.
+Several Cartesian configurations stay efficient on single displaced photons
+across the whole scan, including in pileup, but the Euclidean ones merge the
+\SI{4}{cm} photon pair heavily, so high efficiency alone does not mean the two
+particles were actually resolved. The gnomonic configuration was the
+most encouraging, giving higher efficiency than default \cluethreed{} at large
+displacement while keeping a low merge rate on the two-photon test, though this
+still needs further studies and its EE-only
+coverage is why its inclusive pileup efficiency looks so low.
+
+The natural next step is to tune coordinates, metric weights, distance scales
+and density thresholds together, judging them against energy recovery,
+fragmentation and cross-shower mixing at once. It also needs to be tested on more
+realistic inputs: the controlled photons here are injected just before HGCAL,
+so they say nothing about upstream interactions or a real LLP lifetime. The
+generation and validation tools built for this study give a starting point for
+that work, and the geometric picture points to the specific clustering
+decisions worth changing.
