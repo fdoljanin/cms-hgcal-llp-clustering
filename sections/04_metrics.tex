@@ -1,107 +1,45 @@
 \section{Reconstruction performance metrics}
 \label{sec:metrics}
 
-The Trackster multiplicity of Section~\ref{sec:gun} is a useful single-photon
-diagnostic, but it says nothing about how the shower energy is distributed among
-reconstructed objects, nor about contamination when several showers overlap. We
-therefore use the HGCAL validation framework, which associates reconstructed
-Tracksters to SimTracksters by shared calorimeter content and from that defines
-efficiency, duplication, merging and fake rates.
+We will study how shower energy is distributed among reconstructed objects and contamination when several showers overlap.
+We use the HGCAL validation framework, which associates reconstructed
+Tracksters to SimTracksters by shared LayerCluster energy and from that defines efficiency, duplicate and merge rates.
 
-\subsection{Shared energy and association scores}
-
-The association uses common LayerCluster content, not proximity of the
-reconstructed and simulated axes. Let $e_i^S$ and $e_i^T$ be the energies of
-LayerCluster $i$ in a SimTrackster $S$ and a reconstructed Trackster $T$; truth
-assignments may be fractional, whereas in \cluethreed{} a LayerCluster is never
-shared between Tracksters, so $e_i^T$ is either zero or the full LayerCluster
-energy. The shared energy and the recovered fraction are
-\begin{equation}
-  E_{\mathrm{shared}}(S,T)=\sum_i\min(e_i^S,e_i^T),
-  \label{eq:sharedenergy}
-\end{equation}
-\begin{equation}
-  f_{ST}=\frac{E_{\mathrm{shared}}(S,T)}{E_S},
-  \qquad E_S=\sum_i e_i^S,
-  \label{eq:sharedfraction}
-\end{equation}
-so $f_{ST}$ measures how much of the true shower---referred to the SimTrackster
-energy $E_S$, not the generated photon energy---is collected in a single
-reconstructed object. Two directional scores quantify the mismatch in each
-direction,
-\begin{align}
-  s_{S\to T}&=\frac{\sum_{i\in S}\bigl[\max(0,e_i^S-e_i^T)\bigr]^2}
-                        {\sum_{i\in S}(e_i^S)^2},
-  \label{eq:simrecoscore}\\
-  s_{T\to S}&=\frac{\sum_{i\in T}\bigl[\max(0,e_i^T-e_i^S)\bigr]^2}
-                        {\sum_{i\in T}(e_i^T)^2}.
-  \label{eq:recosimscore}
-\end{align}
-Lower is better: $s_{S\to T}$ penalizes missing SimTrackster content, while
-$s_{T\to S}$ penalizes reconstructed content foreign to $S$. Because they weight
-squared energies, a score cut is not equivalent to a cut on $f_{ST}$.
+The association compares the per-LayerCluster energies of a SimTrackster $S$ and
+a reconstructed Trackster $T$. The shared energy $E_{\mathrm{shared}}(S,T)$ is
+the energy common to both, and the recovered fraction
+$f_{ST}=E_{\mathrm{shared}}(S,T)/E_S$ is the fraction of the true shower energy
+$E_S$ in a single reconstructed object. Two directional scores,
+$s_{S\to T}$ and $s_{T\to S}$ (weighting squared energies, lower being better),
+separately penalize SimTrackster energy missing from $T$ and reconstructed energy
+in $T$ missing in $S$.
 
 \subsection{Efficiency, duplicate rate and merge rate}
 
-A SimTrackster is counted as reconstructed if some Trackster holds more than half
-of its energy. In a bin $B$ of a truth observable,
+A SimTrackster is counted as efficient if some T holds more than half
+its energy. It does not check does that T contain several S.  Binned in a truth observable $B$ (e.g. displacement R), we define efficiency as
 \begin{equation}
   \epsilon(B)=\frac{N_S(B;\ \exists T:\ f_{ST}>0.5)}{N_S(B)}.
   \label{eq:efficiency}
-\end{equation}
-Each SimTrackster counts at most once and its fragments are not summed, so
-efficiency measures energy recovery in one object, not that the shower is
-reconstructed as a single piece. The duplicate rate counts showers reconstructed
-more than once, and the merge rate---defined from the reconstructed side---counts
-objects matching more than one truth shower,
+\end{equation} The
+duplicate rate counts S matched by more than one T. Merge
+rate, defined on reconstruction tracksters (binned by reconstructed R), measures T matching more than one
+S. Formal definitions are
 \begin{equation}
   D(B)=\frac{N_S(B;\ \#\{T:s_{S\to T}<0.6\}\geq2)}{N_S(B)},
   \label{eq:duplicaterate}
 \end{equation}
 \begin{equation}
-  M(B)=\frac{N_T(B;\ \#\{S:s_{T\to S}<0.6\}\geq2)}{N_T(B)},
+  M(B)=\frac{N_T(B;\ \#\{S:s_{T\to S}<0.6\}\geq2)}{N_T(B)}.
   \label{eq:mergerate}
 \end{equation}
-where $N_T(B)$ counts the nonempty reconstructed Tracksters. All three use the
-working score threshold $0.6$, an explicit override of the validation default
-$0.2$. Small fragments can fail the association cut, so a low duplicate or merge
-rate does not by itself exclude fragmentation---a caveat revisited in the
-two-shower study.
+Small fragments can fail
+this cut, so a low duplicate or merge rate does not by itself exclude
+fragmentation; it is a caveat revisited in the two-shower study.
 
-\subsection{Fake rate, purity and displacement binning}
-
-A reconstructed Trackster is non-fake if it has at least one SimTrackster match
-with $s_{T\to S}<0.6$; the fake rate is the complementary fraction, and stays near
-zero even for fragments fully attributable to one shower. The validation's
-\emph{purity} is instead a truth-side rate---the fraction of SimTracksters with a
-match at $s_{S\to T}<0.2$---and should not be confused with the per-object energy
-fraction $E_{\mathrm{shared}}/E_T$.
-
-Efficiency, duplicate and purity rates use the SimTrackster denominator and are
-binned in truth $\R$ or $\alphainc$; fake and merge rates use the
-reconstructed-Trackster denominator and the barycentre-plus-clean-PCA
-displacement of Section~\ref{sec:displacement}, with no truth match required, so
-they inherit its resolution. Under pileup a signal-only rate counts only the
-signal photon's SimTrackster, whereas an inclusive rate also counts pileup
-SimTracksters; the sample and truth selection must therefore be stated with every
-curve.
-
-\subsection{Improvements to the validation framework}
-
-Applying these metrics to isolated displaced showers required changes to the
-standard validation. A restrictive sim-to-reco threshold can hide splitting,
-because two fragments need not each resemble the full shower closely enough to
-pass. I therefore made the non-fake, merge, purity and duplicate score thresholds
-independently configurable, so the duplicate threshold can be relaxed without
-touching the energy-based efficiency definition. Together with the displacement
-and timing observables and a ROOT segmentation-fault fix in separate-plot
-production, these changes went into CMSSW pull request
-\href{https://github.com/cms-sw/cmssw/pull/51510}{\#51510}.
-
-A subsequent refactoring of histogram booking and filling (pull request
-\href{https://github.com/cms-sw/cmssw/pull/51565}{\#51565}) extended the
-validation to two-dimensional distributions. Recording numerator and denominator
-jointly in, for example, $\R$ and energy or $\R$ and pseudorapidity allows
-performance to be evaluated in slices of the second variable---essential for
-distinguishing a true displacement dependence from changes in the energy or
-angular composition of the sample.
+\subsection{Validation changes}
+Making the merge, duplicate and other score thresholds configurable, displacement and timing observables, and a later refactoring that added
+two-dimensional metrics in $\R$ and a second
+variable, went into CMSSW pull requests
+\href{https://github.com/cms-sw/cmssw/pull/51510}{\#51510} and
+\href{https://github.com/cms-sw/cmssw/pull/51565}{\#51565}.

@@ -54,6 +54,7 @@
 % \SI{value}{unit} -> value + thin space + unit, works in text and math.
 \providecommand{\SI}[2]{\mbox{#1\,#2}}
 \providecommand{\num}[1]{\mbox{#1}}
+\pdfstringdefDisableCommands{\def\SI#1#2{#1 #2}}
 
 % --- convenience macros (consistent notation across the paper) ---
 \newcommand{\R}{\ensuremath{R}}                 % displacement radius
@@ -69,7 +70,9 @@
 \title{\vspace{-2em}\bfseries Reconstruction of long-lived particles\\ with the CLUE algorithm in CMS}
 \author{Frane Doljanin\\
   \small\textit{CERN Summer Student Programme}\\
-  \small\textit{Supervisor: Bruno Alves, CERN, Experimental Physics Department}}
+  \small\href{mailto:fdoljanin@pmfst.hr}{\texttt{fdoljanin@pmfst.hr}}\\[0.4em]
+  \small\textit{Supervisor: Bruno Alves, CERN, Experimental Physics Department}\\
+  \small\href{mailto:bruno.afonso.fontana.santos.alves@cern.ch}{\texttt{bruno.afonso.fontana.santos.alves@cern.ch}}}
 \date{\today}
 
 \begin{document}
