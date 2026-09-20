@@ -1,4 +1,4 @@
-\section{Conclusions}
+\section{Conclusions and next steps}
 \label{sec:conclusions}
 
 This project looked at how HGCAL clustering behaves when photons no
@@ -6,12 +6,13 @@ longer point back to the interaction point, and which specific features cost per
 to the CMSSW validation, and produced the two-dimensional performance maps used throughout. Comparing
 shower direction estimators gave an approximately \SI{10}{cm} resolution on the
 back-extrapolated displacement of the most energetic Trackster.
+The default PCA estimator already available in CMSSW achieved the best resolution; several alternative methods reached comparable performance, but none improved upon it.
 
 A large part of the work went into explaining why default \cluethreed{} loses efficiency on
 single displaced photons. Because it projects everything from the origin, two points
 on the same shower axis look transversely separated by roughly $R|\Delta z|/z$,
 and this separation grows with displacement. The loss comes in two
-stages: in first, nearest-higher link 2 layer away breaks, so efficiency decreases and then plateau, and at larger displacement one-layer breaks take over
+stages: in the first, nearest-higher link 2 layer away breaks, so efficiency decreases and then plateaus, and at larger displacement one-layer breaks take over
 and drive the final decline. Widening the seed distance from
 \SI{1.8}{cm} to \SI{2.1}{cm}, pushes the
 fragmentation out to larger displacement confirming the theory.

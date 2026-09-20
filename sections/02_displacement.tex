@@ -11,7 +11,7 @@ carry no truth information.
   \centering
   \includegraphics[width=\linewidth]{figures/hgcal_nonpointing.png}
   \caption{Displacement geometry in the $(z,R)$ plane. Pointing photons (red)
-  travel radially from the interaction point (IP) with $\alphainc=0$; displaced
+  travel radially from the interaction point with $\alphainc=0$; displaced
   photons (green) originate at a transverse distance $\R$ from the beamline at
   $z=0$ and hit the calorimeter with $\alphainc>0$. The two green
   trajectories show that a single $\R$ can give different angles $\alphainc$.}
@@ -21,7 +21,8 @@ carry no truth information.
 Consider a photon that is created at
 $\mathbf{x}_v=(x_v,y_v,z_v)$ and travels in a straight line to the HGCAL front
 face, located at $z\simeq\SI{321}{cm}$ from the interaction
-point (Fig.~\ref{fig:geometry}). We measure its displacement by two
+point (Fig.~\ref{fig:geometry}). HGCAL has two endcaps; in this report,
+we consider the positive-$z$ endcap. We measure its displacement by two
 quantities:
 \begin{itemize}
   \item the \textbf{displacement radius} \R{}, defined as the transverse
@@ -31,19 +32,20 @@ quantities:
     \label{eq:Rdef}
   \end{equation}
   where $(x_0,y_0)$ is extrapolated trajectory to $z=0$;
-  \item the \textbf{non-pointing angle} \alphainc{}, the angle between the
-  photon's momentum $\mathbf{p}$ and its position vector at the HGCAL front face
-  $\mathbf{x}_{\text{face}}$,
+  \item the \textbf{displacement angle} \alphainc{}, the angle between the
+  photon's momentum direction $\hat{\mathbf{p}}$ and the unit vector
+  $\hat{\mathbf{r}}_{\text{face}}$ from the IP to its entry point on the HGCAL
+  front face,
   \begin{equation}
     \alphainc = \arccos\!\left(
-      \frac{\mathbf{x}_{\text{face}}\cdot\mathbf{p}}
-           {\lvert\mathbf{x}_{\text{face}}\rvert\,\lvert\mathbf{p}\rvert}
+      \hat{\mathbf{r}}_{\text{face}}\cdot\hat{\mathbf{p}}
     \right).
     \label{eq:alphadef}
   \end{equation}
   A prompt photon has
-  $\mathbf{x}_{\text{hit}}\parallel\mathbf{p}$ and $\R=\alphainc=0$; a displaced
-  photon has $\R>0$ and $\alphainc>0$.
+  $\hat{\mathbf{r}}_{\text{face}}\parallel\hat{\mathbf{p}}$ and
+  $\R=\alphainc=0$; the non-pointing photons studied here have $\R>0$ and
+  $\alphainc>0$.
 \end{itemize}
 For a truth photon these quantities are trivial, since the
 production vertex and momentum are known directly from the generator truth.
@@ -51,7 +53,7 @@ production vertex and momentum are known directly from the generator truth.
 \subsection{Reconstructing the displacement}
 
 The difficulty is on the reconstruction side. A reconstructed Trackster has no
-persisted vertex where was it produced, and it does not need to correspond one-to-one to a SimTrackster: it
+persisted vertex where it was produced, and it does not need to correspond one-to-one to a SimTrackster: it
 may contain only a fragment of a true shower, or it may merge multiple showers.
 The merge-rate metrics defined below require a
 displacement value. We therefore reconstruct \R{} directly from the reconstructed
@@ -96,15 +98,26 @@ amplified over $z_c\sim\SI{320}{cm}$ extrapolation back to $z=0$.
   \label{fig:methods}
 \end{figure}
 
-Knowing problem is in direction, we tried several alternative
-estimators of the shower direction: a cleaned PCA that keeps only the leading
-LayerCluster per layer in a window around the shower maximum, directions from
-the endpoint and per-layer window barycentres, energy-weighted straight-line
-fits with and without an outlier refit, and a PCA on the raw RecHits. Restricted
-to the most energetic (leading) Trackster per event---the object that actually
-carries the photon---none improves significantly on the default
-(Fig.~\ref{fig:methods}): the PCA variants are already the narrowest. Because
-the clean PCA is robust and already implemented in CMSSW, it was adopted.
+Since the direction estimate dominates the error, we tested several direction
+estimators:
+\begin{itemize}
+  \item \textbf{Ordinary PCA}: the CMSSW default, using all LayerClusters.
+  \item \textbf{Clean PCA}: PCA using only the leading
+  LayerCluster per layer in a window 10 layers before after around the shower maximum.
+  \item \textbf{Endpoint layers}: the direction between the first and last
+  populated layers in the window.
+  \item \textbf{Window barycentres}: an axis constructed from per-layer
+  energy-weighted barycentres.
+  \item \textbf{Weighted straight-line fit}: an energy-weighted fit to the
+  LayerClusters.
+  \item \textbf{Weighted line fit with outlier refit}: the same fit after
+  removing the LayerClusters with the largest residuals.
+  \item \textbf{RecHit PCA}: PCA performed on raw RecHits rather than
+  LayerClusters.
+\end{itemize}
+Figure~\ref{fig:methods} compares these methods for the leading Trackster per
+event. The PCA variants are already the narrowest; because clean PCA is robust
+and implemented in CMSSW, it was adopted.
 
 The resolution improves with Trackster energy, as a more energetic shower gives
 the PCA more LayerClusters to fit its axis; $\sim\SI{10}{cm}$ is
@@ -114,4 +127,4 @@ The displacement observables \R{} and \alphainc{}, together with a
 Trackster-timing observable, were added to the standard HGCAL validation as new
 per-object quantities so that any efficiency, purity, duplicate, fake or merge plot
 can be produced as a function of displacement (CMSSW pull request
-\href{https://github.com/cms-sw/cmssw/pull/51510}{\#51510}).
+\#51510~\cite{DoljaninPR51510}).

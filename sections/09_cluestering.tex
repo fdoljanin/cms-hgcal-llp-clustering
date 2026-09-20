@@ -71,18 +71,6 @@ Run4D121 geometry, subject to the gun's surface-acceptance requirements.
   \label{fig:cluesteringefficiencies}
 \end{figure*}
 
-The \SI{6}{cm} Cartesian configurations largely avoid the severe large-displacement
-loss of \cluethreed{} (Fig.~\ref{fig:cluesteringefficiencies}). The
-gnomonic configuration degrades at large displacement, as expected for
-projective coordinates, but far less than \cluethreed{}, so it too looks
-promising--- origin projection does not imply identical performance,
-since the cylinder neighbourhood, distance scales and variable density all
-differ. The surprise is the smaller Euclidean setting: weighted \SI{3}{cm} loses almost all efficiency by approximately \SI{300}{cm}.
-Since it uses Cartesian coordinates, this failure cannot be attributed to an
-origin projection.
-
-\subsection{Understanding the weighted Euclidean \SI{3}{cm} failure}
-
 \begin{figure*}[!tp]
   \centering
   \begin{subfigure}{0.49\textwidth}
@@ -96,6 +84,39 @@ origin projection.
   \caption{Diagnostics for the weighted Euclidean metric at $d_m=\SI{3}{cm}$, versus
   truth displacement $R_0$.}
   \label{fig:cluesteringdiagnostic}
+\end{figure*}
+
+The \SI{6}{cm} Cartesian configurations largely avoid the severe large-displacement
+loss of \cluethreed{} (Fig.~\ref{fig:cluesteringefficiencies}). The
+gnomonic configuration degrades at large displacement, as expected for
+projective coordinates, but far less than \cluethreed{}, so it too looks
+promising--- origin projection does not imply identical performance,
+since the cylinder neighbourhood, distance scales and variable density all
+differ. The surprise is the smaller Euclidean setting: weighted \SI{3}{cm} loses almost all efficiency at approximately \SI{300}{cm}.
+Since it uses Cartesian coordinates, this failure cannot be attributed to an
+origin projection.
+
+\subsection{Understanding the weighted Euclidean \SI{3}{cm} failure}
+
+
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/cluestering_signal_pu.png}
+    \caption{Efficiency for the generated signal photon in PU200.}
+    \label{fig:cluesteringsignalpu}
+  \end{subfigure}
+  \par\medskip
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/cluestering_inclusive_pu.png}
+    \caption{Efficiency for the inclusive in-time truth population.}
+    \label{fig:cluesteringinclusive}
+  \end{subfigure}
+  \caption{PU200 efficiencies, with default \cluethreed{} as the baseline
+  and the same relative-efficiency convention as
+  Fig.~\ref{fig:cluesteringefficiencies}.}
+  \label{fig:cluesteringpuefficiencies}
 \end{figure*}
 
 To understand why, I plotted coordinate components of the nearest-higher
@@ -126,23 +147,22 @@ The PU200 comparison uses a 10\,000-event sample for each tested
 configuration. As in Section~\ref{sec:pileup}, I measured the generated signal
 photon separately from the inclusive in-time truth population.
 
+
+
 \begin{figure*}[!tp]
   \centering
-  \begin{subfigure}{\textwidth}
-    \includegraphics[width=\linewidth]{figures/cluestering_signal_pu.png}
-    \caption{Efficiency for the generated signal photon in PU200.}
-    \label{fig:cluesteringsignalpu}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/cluestering_duplicates.png}
+    \caption{Signal-photon duplicates versus truth displacement.}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/cluestering_merges.png}
+    \caption{Reconstructed-object merges versus barycentre radius.}
   \end{subfigure}
-  \par\medskip
-  \begin{subfigure}{\textwidth}
-    \includegraphics[width=\linewidth]{figures/cluestering_inclusive_pu.png}
-    \caption{Efficiency for the inclusive in-time truth population.}
-    \label{fig:cluesteringinclusive}
-  \end{subfigure}
-  \caption{PU200 efficiencies, with default \cluethreed{} as the baseline
-  and the same relative-efficiency convention as
-  Fig.~\ref{fig:cluesteringefficiencies}.}
-  \label{fig:cluesteringpuefficiencies}
+  \caption{Complementary PU200 rates. The duplicate denominator contains
+  signal SimTracksters, while the merge denominator contains reconstructed
+  Tracksters.}
+  \label{fig:cluesteringrates}
 \end{figure*}
 
 For the signal photon, the no-pileup ordering survives
@@ -163,28 +183,7 @@ This is unlikely to be the projective metric itself: its direction-dependent
 density threshold probably suppresses much of the pileup, and it does not yet
 cluster the hadronic section, which matters for PU. Both remain to be confirmed.
 
-\begin{figure*}[!tp]
-  \centering
-  \begin{subfigure}{0.49\textwidth}
-    \includegraphics[width=\linewidth]{figures/cluestering_duplicates.png}
-    \caption{Signal-photon duplicates versus truth displacement.}
-  \end{subfigure}\hfill
-  \begin{subfigure}{0.49\textwidth}
-    \includegraphics[width=\linewidth]{figures/cluestering_merges.png}
-    \caption{Reconstructed-object merges versus barycentre radius.}
-  \end{subfigure}
-  \caption{Complementary PU200 rates. The duplicate denominator contains
-  signal SimTracksters, while the merge denominator contains reconstructed
-  Tracksters.}
-  \label{fig:cluesteringrates}
-\end{figure*}
 
-The duplicate rates in Fig.~\ref{fig:cluesteringrates}(a) show how completely
-the signal is collected into one object, although one shower fragmented into many small tracksters is not considered duplicate due to threshold.
-
-The reconstructed-object merge curves in Fig.~\ref{fig:cluesteringrates} are highest for \cluethreed{}.
-
-\subsection{Two nearby photons and outlook}
 
 \begin{figure*}[!tp]
   \centering
@@ -199,6 +198,15 @@ The reconstructed-object merge curves in Fig.~\ref{fig:cluesteringrates} are hig
   \caption{Two photons separated by \SI{4}{cm}.}
   \label{fig:cluesteringtwophoton}
 \end{figure*}
+
+The duplicate rates in Fig.~\ref{fig:cluesteringrates}(a) show how completely
+the signal is collected into one object, although one shower fragmented into many small tracksters is not considered duplicate due to threshold.
+
+The reconstructed-object merge curves in Fig.~\ref{fig:cluesteringrates} are highest for \cluethreed{}.
+
+\subsection{Two nearby photons and outlook}
+
+
 
 A dedicated two-photon comparison at \SI{4}{cm} separation tests nearby showers
 directly (Fig.~\ref{fig:cluesteringtwophoton}). Here efficiency cannot be read
@@ -226,6 +234,6 @@ diagnostic to this experiment would test merging more directly. Taken
 together, the results show that \cluestering{} offers several useful choices:
 the gnomonic configuration improves on \cluethreed{} in both single- and
 two-photon tests, while the Cartesian metrics buy their high efficiency partly
-by merging and must be tuned against that. Its strong suppression of the pileup remains a limitation of the present setup. The next
+by merging and must be tuned against that. The next
 step is to tune coordinates, metric weights,
 distance reaches and density settings together, using signal and PU efficiency, duplicate, merge and fake rate to guide the choice.

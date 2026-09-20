@@ -3,9 +3,34 @@
 
 \cluethreed{} is the existing CMS algorithm that groups LayerClusters across
 calorimeter layers into Tracksters using the density-based idea of
-CLUE~\cite{Rovere2020clue}. The studies use the default HLT \cluethreed{}
+CLUE~\cite{Rovere2020clue}. Its CMSSW implementation is available in
+\texttt{PatternRecognitionbyCLUE3D.cc}~\cite{CMSSWCLUE3D}.
+The studies use the default HLT \cluethreed{}
 configuration without tuning for displaced showers, except where a parameter
-variation is explicitly stated.
+variation is explicitly stated. Table~\ref{tab:clue3d-defaults} lists the
+parameters referenced below; \cluethreed{} has additional
+configuration parameters that are not discussed here. Values set by the
+\href{https://github.com/cms-sw/cmssw/blob/fdf6ff30b0b8564968dd4ae2004db5467be52eea/RecoHGCal/TICL/python/CLUE3DHighStep_cff.py#L17-L29}{HLT configuration}
+override the \href{https://github.com/cms-sw/cmssw/blob/fdf6ff30b0b8564968dd4ae2004db5467be52eea/RecoHGCal/TICL/plugins/PatternRecognitionbyCLUE3D.cc#L733-L773}{algorithm defaults}.
+
+\begin{table}[!tb]
+  \centering
+  \scriptsize
+  \caption{Default HLT \cluethreed{} parameters referenced in this section.}
+  \label{tab:clue3d-defaults}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Parameter & Value \\
+    \midrule
+    \texttt{criticalDensity} & $\SI{0.6}{GeV}$ \\
+    \texttt{densitySiblingLayers} & $3$ \\
+    \texttt{densityXYDistanceSqr} & $3.24\,\mathrm{cm}^2$ ($\dc=\SI{1.8}{cm}$) \\
+    \texttt{kernelDensityFactor} & $0.2$ \\
+    \texttt{criticalXYDistance} & $\SI{1.8}{cm}$ ($\dm$) \\
+    \texttt{outlierMultiplier} & $2$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \subsection{Neighbourhoods projected from the interaction point}
 
@@ -17,33 +42,48 @@ along the ray from the origin through $j$. The projected radius is
 \begin{equation}
   r_{j\to i}=z_i\frac{r_j}{z_j}.
 \end{equation}
-The squared transverse distance used by the implementation is then
+With the azimuthal difference $\Delta\phi_{ij}$ wrapped into $[-\pi,\pi]$,
+the radial and azimuthal components of the projected separation are
 \begin{equation}
-  d_{XY}^2(i,j)=(r_i-r_{j\to i})^2
-                    +r_{j\to i}^{\,2}(\Delta\phi_{ij})^2,
+  d_{r,ij}=r_i-r_{j\to i},
+  \qquad
+  d_{\phi,ij}=r_{j\to i}\Delta\phi_{ij}.
+\end{equation}
+The squared projected distance in the transverse $(x,y)$ plane, denoted
+$d_{XY}^2$, is
+\begin{equation}
+  \begin{aligned}
+  d_{XY}^2(i,j)
+    &= d_{r,ij}^2+d_{\phi,ij}^2 \\
+    &= (r_i-r_{j\to i})^2
+       +r_{j\to i}^{\,2}(\Delta\phi_{ij})^2,
+  \end{aligned}
   \label{eq:clueprojective}
 \end{equation}
-where $\Delta\phi_{ij}$ is the azimuthal difference wrapped into
-$[-\pi,\pi]$. The second term uses the small-angle arc distance in azimuth.
+This expression uses the small-angle approximation to represent the azimuthal
+separation as an arc length.
 This is a projected distance, not Euclidean distance of the two LayerClusters. Exchanging $i$ and
 $j$ changes the reference plane and can change its value, so $d_{XY}(i,j) \neq d_{XY}(j,i)$.
 
 Candidate searches are restricted to three layers
-before and after the reference layer. They also use nearby position-based
-$(\eta,\phi)$ buckets called tiles: up to two tiles on either side for density estimation,
-and one for the nearest-higher search.
+before and after the reference layer. They also use position-based
+$(\eta,\phi)$ buckets called tiles. On each searched layer, LC candidates for density
+are taken from tiles within two bins in both $\eta$ and $\phi$ of the reference
+LayerCluster's tile. The nearest-higher search uses one bin in each direction.
 
 \subsection{Density and Trackster formation}
 
 The local density of LayerCluster $i$ is
 \begin{equation}
-  \rho_i=E_i+0.2\sum_{j\in\mathcal{N}_i}E_j,
+  \rho_i=E_i+k_\rho\sum_{j\in\mathcal{N}_i}E_j,
   \label{eq:cluedensity}
 \end{equation}
-where $\mathcal{N}_i$ contains candidate LayerClusters on other layers with
+where $k_\rho=0.2$ is the \texttt{kernelDensityFactor}, and $\mathcal{N}_i$
+contains candidate LayerClusters on other layers with
 $d_{XY}(i,j)<\dc$, and $\dc=\SI{1.8}{cm}$. The algorithm then finds the
-nearest higher-density LayerCluster $h(i)$ from another layer, minimizing the
-projected transverse distance, and records
+nearest higher-density LayerCluster $h(i)$ from a layer
+$\ell_{h(i)}\in[\ell_i-3,\ell_i+3]$, with $\ell_{h(i)}\neq\ell_i$, minimizing
+the projected transverse distance, and records
 $\delta_i=d_{XY}(i,h(i))$. This search can find neighbours beyond $\dc$;
 if none is found, the distance is treated as infinite.
 

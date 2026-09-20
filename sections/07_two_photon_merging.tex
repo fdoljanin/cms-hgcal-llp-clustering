@@ -9,10 +9,13 @@ I therefore extended the displaced-gun studies to two photons. All results in th
 \subsection{Controlled shower separation}
 
 The two photons are separated with a distance-scan generator: they have equal
-energies and parallel momenta, with production points separated by $s=\SI{4}{cm}$. We chose \SI{4}{cm} because effects are clearest at that distance (different distances were examined).
+energies and parallel momenta, with production points separated by $s=\SI{4}{cm}$.
+This separation was chosen because the merging behaviour is most clearly visible
+there. Other values of $s$ were also studied, as shown in
+Fig.~\ref{fig:merge-distance-scan}, but are not discussed further.
 The study uses 50\,000 generated events.
 
-\begin{figure}[!tp]
+\begin{figure*}[!tp]
   \centering
   \begin{subfigure}{0.49\linewidth}
     \includegraphics[width=\linewidth]{figures/merge_rate_distance_s4.png}
@@ -26,7 +29,22 @@ The study uses 50\,000 generated events.
   \end{subfigure}
   \caption{Two-photon distance scan with default \cluethreed{} at $s=\SI{4}{cm}$.}
   \label{fig:mergingdistance}
-\end{figure}
+\end{figure*}
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}{0.49\linewidth}
+    \includegraphics[width=\linewidth]{figures/merge_rate_distance.png}
+    \caption{Merge rate.}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.49\linewidth}
+    \includegraphics[width=\linewidth]{figures/merge_index_distance.png}
+    \caption{Cross-shower link index.}
+  \end{subfigure}
+  \caption{Two-photon separation scan with default \cluethreed{} for
+  $s=1,2,4,8,16\,\mathrm{cm}$.}
+  \label{fig:merge-distance-scan}
+\end{figure*}
 
 Merge rate initially appears encouraging at large $\R$: after rising at intermediate displacement, it falls again
 (Fig.~\ref{fig:mergeratedistance}). However, this is the same region in which
@@ -54,11 +72,11 @@ where $o(\cdot)$ is the LC's truth shower, $E_i$ is LC energy, and $\mathcal{F}_
  are follower LCs whose truth shower is in
 displacement bin $B$.
 
-The index counts links instead of the total energy eventually
+The index measures energy-weighted LayerClusters linked to wrong nearestHigher, instead of the total energy eventually
 assigned to the wrong shower. One crossing link can redirect a whole chain of
 followers, and seed and outlier decisions change which LCs enter the
 denominator. These differences make it complementary to the object-based merge
-rate.
+rate. Unlike merge rate, this diagnostic is not generic: it requires a nearest-higher link structure and therefore applies only to CLUE-like algorithms.
 
 Figure~\ref{fig:mergeindexdistance} denies the apparent improvement. For
 $s=\SI{4}{cm}$, the index rises from close to zero near the origin to about $0.18$
@@ -71,7 +89,8 @@ the reconstructed-object merge rate decreases.
   \includegraphics[width=\linewidth]{figures/merge_mechanism_rz.png}
   \caption{An actual cross-shower nearest-higher link for photons separated by
   $s=\SI{4}{cm}$ at $\R\simeq\SI{131}{cm}$, shown as $r/z$ versus layer. Blue marks the
-   shower $A$ and red the other shower $B$; the dashed line is the
+   simulated truth shower $A$ and red the simulated truth shower $B$, rather
+  than reconstructed Trackster membership; the dashed line is the
   recorded nearest-higher hop from $B$'s highlighted LC (layer 55) to $A$'s
   (layer 52). The two lie at nearly the same $r/z$ despite belonging to
   different showers.}
@@ -97,7 +116,7 @@ $B$ at $z_j$ onto the layer of a point on shower $A$ at $z_i$ gives distance:
  =\mathbf{b}_A\frac{z_j-z_i}{z_j}-\frac{z_i}{z_j}\mathbf{s}.
  \label{eq:crossshowerprojection}
 \end{equation}
-The first term is previously explained projective distance error;
+The first term is the previously explained projective distance error;
 the second represents the true separation of the pair. For suitable shower positions, these terms partly cancel. Points from
 different showers can then appear close in the projected plane even while
 points along one shower are pushed apart.

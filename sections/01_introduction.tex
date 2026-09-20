@@ -8,10 +8,9 @@ volume and the severe pileup---of order $200$ simultaneous interactions per
 bunch crossing---demand a new generation of reconstruction algorithms. To cope
 with these conditions the CMS experiment will replace its endcap calorimeters
 with the High-Granularity Calorimeter (HGCAL)~\cite{HGCALTDR}, a sampling
-calorimeter with roughly six million channels arranged in about fifty
+calorimeter with roughly six million channels arranged in 47
 longitudinal layers. Its fine transverse and longitudinal segmentation capture detailed three-dimensional structure of electromagnetic and hadronic
-showers. It also makes traditional calorimeter clustering impractical and
-motivates dedicated clustering algorithms.
+showers, while also providing energy capture timing information.
 
 \begin{figure*}[!tp]
   \centering
@@ -32,30 +31,27 @@ motivates dedicated clustering algorithms.
   (RecHits) of two photon showers. CLUE groups them by layer into
   two-dimensional LayerClusters.
   (b) \cluethreed{} links LayerClusters across layers into a
-  three-dimensional Trackster; the red lines are the nearest-higher links that
+  three-dimensional Trackster; the red lines are the links that
   build the shower.}
   \label{fig:rechits}
 \end{figure*}
 
-The Clustering of Energy (CLUE) algorithm~\cite{Rovere2020clue} was developed for this purpose: it is a fast, parallel, energy density-based clustering algorithm. It groups HGCAL energy deposits into physics objects such as photons and
-electrons. In the CMS reconstruction, CLUE and its three-dimensional extension
-\cluethreed{} sit inside The Iterative Clustering (TICL)
-framework~\cite{TICL}, which builds objects in stages
-(Fig.~\ref{fig:rechits}): individual calorimeter hits (\emph{RecHits}) are first
-grouped per layer by CLUE into two-dimensional \emph{LayerClusters} (LCs);
-\cluethreed{} then links LayerClusters from multiple layers into three-dimensional
-\emph{Tracksters}; and a subsequent linking step associates Tracksters into the
-final TICL candidates. The Monte Carlo truth is described by an analogous chain,
-in which a generated particle (\emph{CaloParticle}) is mapped to a
-\emph{SimTrackster} that collects the LayerClusters that belong to it.
+The Clustering of Energy (CLUE) algorithm~\cite{Rovere2020clue} is a fast, parallel, energy density-based clustering algorithm that groups HGCAL energy deposits within each layer. In the CMS reconstruction, the Iterative Clustering (TICL)
+framework~\cite{TICL} builds objects in stages (Fig.~\ref{fig:rechits}): individual calorimeter hits (\emph{RecHits}) are first
+grouped per layer by CLUE into two-dimensional \emph{LayerClusters} (LCs). A
+three-dimensional extension of CLUE, \cluethreed{}, then links LayerClusters across
+multiple layers into \emph{Tracksters}; a subsequent linking step associates
+Tracksters into the final TICL candidates. The Monte Carlo truth is represented
+by \emph{SimTracksters}, which collect the LayerClusters associated with a
+simulated shower.
 Reconstruction performance is measured by comparing reconstructed Tracksters to
 SimTracksters through their shared energy.
 
 An important \cluethreed{} assumption: the neighbour search that links layer
-clusters across layers is performed in a coordinate system projected from
-the interaction point (IP), therefore shower travelling outward
-from the CMS centre keeps fixed projected position layer to layer. This
-holds for \emph{prompt} particles produced at the beamline, but it doesn't need to for
+clusters across layers is performed in a coordinate system that projects layers towards the interaction point (IP). Consequently, a shower
+travelling outward from the CMS centre has a fixed projected position from
+layer to layer. This
+holds for \emph{prompt} particles produced at the IP, but it doesn't need to for
 the class of \emph{long-lived particles} (LLPs) predicted by many extensions of
 the Standard Model~\cite{LLPreview}. Rather than decaying within a few
 millimetres of IP, an LLP can travel longer distance in the detector before decaying, producing \emph{displaced}, non-pointing
@@ -65,19 +61,21 @@ the origin, they may violate exactly the assumption on which \cluethreed{}
 relies.
 
 The goal of this project is to determine
-is \cluethreed{} capable of clustering the energy deposits from such
+if \cluethreed{} is capable of clustering the energy deposits from such
 novel topologies, to measure the expected performance degradation as a function
 of the distance from IP to where LLP decays, and to explore an alternative algorithm. We restrict the study to
-neutral \emph{photons}: photons whose trajectory is not curved by the CMS magnetic field, so
-they go in straight lines and their displacement is unambiguously defined; they also do not interact in the tracker before
-reaching the calorimeter. This isolates the calorimeter clustering behaviour
+ \emph{photons}: neutral particles whose trajectory is not curved by the CMS magnetic field, so
+they go in straight lines and their displacement is unambiguously defined. We also produce them immediately in front of HGCAL so they also do not interact in the tracker. This isolates the calorimeter clustering behaviour
 from tracking and magnetic-field effects and provides the cleanest possible test
 of the origin assumption.
 
-The remainder of this report is organized as follows. We first define the
-displacement observables and describe how they are defined for reconstructed objects, then present the displaced-photon Monte Carlo
-production and the performance metrics. After reviewing how \cluethreed{} works,
-with emphasis on the origin assumption, we present the single-photon efficiency,
-the two-shower merging behaviour, and the performance under pileup, before
-comparing \cluethreed{} against the alternative algorithm \cluestering{} and
-concluding.
+The remainder of this report is organized as follows. Section~\ref{sec:displacement}
+defines the displacement observables for reconstructed objects, while
+Sections~\ref{sec:gun} and~\ref{sec:metrics} describe the displaced-photon Monte
+Carlo production and performance metrics. Section~\ref{sec:clue3d} reviews how
+\cluethreed{} works, with emphasis on the origin assumption. We then present
+the single-photon efficiency (Section~\ref{sec:singlephoton}), two-shower
+merging behaviour (Section~\ref{sec:merging}), and performance under pileup
+(Section~\ref{sec:pileup}), before comparing \cluethreed{} with the alternative
+algorithm \cluestering{} (Section~\ref{sec:cluestering}) and concluding in
+Section~\ref{sec:conclusions}.

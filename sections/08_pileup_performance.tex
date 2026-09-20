@@ -5,7 +5,9 @@ Pileup introduces many nearby showers with a broad range of energies and
 particle types. I studied samples with an average of 200 additional interactions per bunch
 crossing (PU200), keeping two efficiencies apart: the efficiency of
 reconstructing the injected signal photon, and the inclusive efficiency
-measured over all selected in-time SimTracksters (signal plus pileup). Signal-only curve tests the same displaced-photon topology in a busier
+measured over all selected in-time\footnote{Produced in the current bunch
+crossing, rather than in the previous or following bunch crossings.}
+SimTracksters (signal plus pileup). Signal-only curve tests the same displaced-photon topology in a busier
 environment. Inclusive curve also changes the population being
 measured.
 
@@ -36,21 +38,16 @@ For pileup particles, resolved $\R$ is particularly easy to misinterpret. The
 HGCal boundary position and direction define a line that can be extrapolated to
 $z=0$. Charged particles bend in the magnetic field, so this line is a tangent
 to a curved trajectory. Its $R$ can be far from 0 even when
-the particle was produced close to beamline. The
+the particle was produced close to the IP. The
 reconstruction consequences, however, are the same either way: a trajectory
-with a large intercept still projects poorly onto the interaction point, so by
+with a large extrapolated $\R$ still projects poorly onto the interaction point, so by
 Eq.~\eqref{eq:displacedscale} its LayerClusters are pushed apart as
 $d_{XY}\simeq\R|\Delta z|/z$ and suffer the same fragmentation as a genuinely
 displaced shower.
 
-Even for a straight photon trajectory, the longitudinal spread of collision
-vertices matters. For a PU photon produced on the beamline at $z=z_v$, the
-transverse intercept of its line at $z=0$ has magnitude
-\begin{equation}
- R=|z_v|\tan\theta,
- \label{eq:pileupphotonR}
-\end{equation}
-where $\theta$ is the momentum polar angle relative to the beam axis.
+Overall, adding PU200 leaves the signal-photon efficiency largely unchanged:
+the loss at large $\R$ persists, while the inclusive curve mainly describes
+the reconstruction of pileup particles.
 
 \subsection{Separating particle composition from reconstruction effects}
 
@@ -77,6 +74,15 @@ strongly in the first bins since they are not curved by magnetic field, while ch
 resolved-displacement range (Fig.~\ref{fig:pileuppid}). This accounts for part
 of the change, but it is not a complete explanation: efficiencies
 within individual species still depend on $\R$.
+
+Even for a straight photon trajectory, the longitudinal spread of collision
+vertices matters. For a PU photon produced on the beamline at $z=z_v$, the
+transverse intercept of its line at $z=0$ has magnitude
+\begin{equation}
+ R=|z_v|\tan\theta,
+ \label{eq:pileupphotonR}
+\end{equation}
+where $\theta$ is the momentum polar angle relative to the beam axis.
 
 For photons, dependence at small $\R$ is angular rather
 than on displacement. Pileup photons come from vertices close to the beamline,

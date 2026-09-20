@@ -3,13 +3,16 @@
 
 The central question of this project is whether \cluethreed{} can reconstruct
 a photon shower whose trajectory does not point back to the interaction
-point. Displaced photon study shows both performance loss
+point. The displaced-photon study shows both a performance loss
 and an unexpected structure: the loss develops in two stages, separated by a
-plateau. Study shows that fragmentation induced by the origin-based projection is the mechanism behind observed loss.
+plateau. The study shows that fragmentation induced by the origin-based
+projection is the mechanism behind the observed loss.
 
 \subsection{The performance loss is not a smooth decline}
 
-We used single displaced photons without pileup, with Run4D121
+We used single displaced photons without pileup, with Run4D121\footnote{The
+CMSSW identifier for the specific Phase-2 detector geometry used in this
+study.}
 geometry and the default HLT \cluethreed{} configuration. The wide-range
 production samples $\R$ uniformly from \SI{0}{cm} to \SI{350}{cm} and photon
 energy from \SI{10}{GeV} to \SI{250}{GeV}, subject to the front and
@@ -28,11 +31,11 @@ reducing each shower to a pass or fail, and does not have a threshold.
 
 \begin{figure*}[!tp]
   \centering
-  \begin{subfigure}[t]{0.49\textwidth}
+  \begin{subfigure}[t]{0.54\textwidth}
     \includegraphics[width=\linewidth]{figures/singlephoton_efficiency_thresholds.png}
     \caption{Efficiency for several shared-energy requirements}
   \end{subfigure}\hfill
-  \begin{subfigure}[t]{0.49\textwidth}
+  \begin{subfigure}[t]{0.44\textwidth}
     \includegraphics[width=\linewidth]{figures/singlephoton_mean_fraction.png}
     \caption{Mean largest shared-energy fraction}
   \end{subfigure}
@@ -60,7 +63,9 @@ efficiency threshold. We will investigate real cause to efficiency loss and plat
   \includegraphics[width=\linewidth]{figures/singlephoton_split_R297_rz.png}
   \caption{A single photon at $\R\simeq\SI{297}{cm}$ split into five
   reconstructed Tracksters, shown as $r/z$ versus layer index. Colour identifies
-  the reconstructed Trackster and marker size the energy; grey markers are outliers. $r/z$ is not constant.}
+  the reconstructed Trackster and marker size the energy; grey markers are
+  outliers. The layer index follows the TICL convention, in which positive-endcap
+  layers are offset to accommodate the negative endcap. $r/z$ is not constant.}
   \label{fig:singlephotonsplit}
 \end{figure}
 
@@ -74,6 +79,35 @@ second explanation is a hidden dependence on trajectory orientation which causes
 $\Delta\phi(\phi_{\text{origin}}, \phi_{\text{surface}})$ left the plateau
 intact, so the mixing of orientations under a
 scalar $\R$ does not create the feature either.
+
+\begin{figure}[!tp]
+  \centering
+  \includegraphics[width=\linewidth,trim=420bp 335bp 417bp 89bp,clip]{figures/singlephoton_neighbourhood_R297.png}
+  \caption{A neighbourhood in the full projected coordinates for the
+  $\R\simeq\SI{297}{cm}$ event previously shown in
+  Fig.~\ref{fig:singlephotonsplit}. The star marks the layer-51 core of a new
+  fragment, and circles the \SI{1.8}{cm} and \SI{3.6}{cm} distances.}
+  \label{fig:singlephotonneighbourhood}
+\end{figure}
+
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth,trim=0 0 0 31bp,clip]{figures/singlephoton_pair_distance.png}
+    \caption{Full projected distance for core-LC pairs}
+    \label{fig:singlephoton-pair-distance}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \includegraphics[width=\linewidth]{figures/singlephoton_seed_energy.png}
+    \caption{Reconstructed energy in additional seeded fragments}
+    \label{fig:singlephoton-seed-energy}
+  \end{subfigure}
+  \caption{The connection between the geometric threshold and fragmentation.
+  (a) Mean full projected distance for LC pairs per $d$. (b) Full reconstructed energy in Tracksters whose
+  seed has a higher-density candidate beyond $\SI{1.8}{cm}$, separated by the layer gap $d$ to
+  that candidate.}
+  \label{fig:singlephotongaps}
+\end{figure*}
 
 \subsection{The geometric origin of the growing distance}
 
@@ -131,42 +165,36 @@ grows. This radial-only picture does not survive once the full projected
 distance is used: the azimuthal term of $d_{XY}$ is not negligible, so the
 crossings shift.
 
-\begin{figure}[!tp]
-  \centering
-  \includegraphics[width=\linewidth,trim=420bp 335bp 417bp 89bp,clip]{figures/singlephoton_neighbourhood_R297.png}
-  \caption{A neighbourhood in the full projected coordinates for the
-  $\R\simeq\SI{297}{cm}$ event. The star marks the layer-51 core of a new
-  fragment, and circles the \SI{1.8}{cm} and \SI{3.6}{cm} distances.}
-  \label{fig:singlephotonneighbourhood}
-\end{figure}
+
 
 The local display in Fig.~\ref{fig:singlephotonneighbourhood} shows why the
 full distance matters: the same-shower LC from another layer lies
 $\SI{1.82}{cm}$ from another seed in projected coordinates, just
 outside the critical circle, so two pieces of one continuous shower fall are not satisfying distance criterion.
 
-\subsection{The two-layer transition explains the first loss}
-
 \begin{figure*}[!tp]
   \centering
   \begin{subfigure}[t]{0.49\textwidth}
-    \includegraphics[width=\linewidth,trim=0 0 0 31bp,clip]{figures/singlephoton_pair_distance.png}
+    \includegraphics[width=\linewidth]{figures/singlephoton_ablation_pair_distance.png}
     \caption{Full projected distance for core-LC pairs}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.49\textwidth}
-    \includegraphics[width=\linewidth]{figures/singlephoton_seed_energy.png}
+    \includegraphics[width=\linewidth]{figures/singlephoton_ablation_seed_energy.png}
     \caption{Reconstructed energy in additional seeded fragments}
   \end{subfigure}
-  \caption{The connection between the geometric threshold and fragmentation.
-  (a) Mean full projected distance for LC pairs per $d$. (b) Full reconstructed energy in Tracksters whose
-  seed has a higher-density candidate beyond $\SI{1.8}{cm}$, separated by the layer gap $d$ to
-  that candidate.}
-  \label{fig:singlephotongaps}
+  \caption{The diagnostics of Fig.~\ref{fig:singlephotongaps} for
+  $\dm=\SI{2.1}{cm}$.}
+  \label{fig:singlephoton-ablation}
 \end{figure*}
 
-Important insight is shown in Fig.~\ref{fig:singlephotongaps}.
+\subsection{The two-layer transition explains the first loss}
+
+
+
+Important insight is shown in Fig.~\ref{fig:singlephoton-pair-distance}.
 Near $\R\simeq\SI{200}{cm}$, the mean full projected distance for
-$d=2$ pairs crosses $\SI{1.8}{cm}$. At the same time, the energy carried by reco
+$d=2$ pairs crosses $\SI{1.8}{cm}$. At the same time, as shown in
+Fig.~\ref{fig:singlephoton-seed-energy}, the energy carried by reco
 Tracksters which failed to follow nearestHigher $d=2$ layers away rises sharply. This connects the threshold to the objects that
 actually remove energy from the best reconstructed match, which reduces efficiency.
 
@@ -185,10 +213,12 @@ second decline.
 
 \subsection{A controlled change of the critical distance}
 
+
+
 As a direct test, I reran the HLT reconstruction on the same sample with the
 seed distance raised from $\dm=\SI{1.8}{cm}$ to $\SI{2.1}{cm}$, with the density
 radius fixed. By Eq.~\eqref{eq:criticaldisplacement} this should push each fragmentation stage to larger $\R$, and it does: the $d=2$ seeded
-contribution turns on later. The
+contribution turns on later, as shown in Fig.~\ref{fig:singlephoton-ablation}. The
 degradation moves where the geometry predicts, suggesting
 that it is caused by the projected-distance threshold and not just correlated
 with displacement.

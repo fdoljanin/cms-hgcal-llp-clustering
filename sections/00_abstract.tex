@@ -1,17 +1,14 @@
-Long-lived particles can decay far from the beamline, producing photons whose
-trajectories do not point back to the interaction point. This breaks the
-assumption behind \cluethreed{}, the CMS clustering algorithm for the
-High-Granularity Calorimeter, which groups energy along directions projected
-from the origin. Using single- and two-photon simulations, with and
-without pileup, I study how well such displaced photons are reconstructed as a
-function of their displacement.
+Long-lived particles can decay far from the interaction point and produce
+photons whose trajectories do not point back to it. Reconstructing these photons
+is a challenge for \cluethreed{}, the clustering algorithm used in the CMS
+High-Granularity Calorimeter.
 
-I first explain geometrically why default \cluethreed{} loses displaced
-photons: its origin projection makes points on a single shower appear
-transversely separated, so the shower fragments as displacement grows, while in
-two-photon events nearby showers merge. The main result is that alternative
-\cluestering{} metrics can do better, recovering displaced photons more
-completely while keeping neighbouring showers apart. Tuning of the coordinates,
-distance metrics and density settings is ongoing, but the results already point
-to a clustering better suited to non-pointing photons than the \cluethreed{}
-default.
+This project studies \cluethreed{} performance using simulated single- and
+two-photon events, with and without pileup. I improved the displaced-photon
+generator and added displacement observables to the standard validation tools.
+The results show that \cluethreed{} loses efficiency as displacement increases,
+with single showers fragmenting and nearby showers becoming mixed. Adding pileup
+leaves the signal-photon efficiency largely unchanged. Tests of the alternative
+\cluestering{} algorithm show that suitable configurations improve
+displaced-photon reconstruction while keeping nearby showers separate. Further
+tuning and tests with realistic long-lived-particle decays are needed.

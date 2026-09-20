@@ -16,15 +16,21 @@ in $T$ missing in $S$.
 
 \subsection{Efficiency, duplicate rate and merge rate}
 
-A SimTrackster is counted as efficient if some T holds more than half
-its energy. It does not check does that T contain several S.  Binned in a truth observable $B$ (e.g. displacement R), we define efficiency as
+For efficiency, a reconstructed Trackster $T$ is matched to a SimTrackster $S$
+if $T$ holds more than half of $S$'s energy, i.e. if $f_{ST}>0.5$. A
+SimTrackster is counted as efficient if at least one reconstructed Trackster is
+matched to it. This criterion does not check whether that $T$ contains energy
+from several SimTracksters.
+Binned in a truth observable $B$ (e.g. displacement R), we define efficiency as
 \begin{equation}
   \epsilon(B)=\frac{N_S(B;\ \exists T:\ f_{ST}>0.5)}{N_S(B)}.
   \label{eq:efficiency}
-\end{equation} The
-duplicate rate counts S matched by more than one T. Merge
-rate, defined on reconstruction tracksters (binned by reconstructed R), measures T matching more than one
-S. Formal definitions are
+\end{equation}
+For the duplicate rate, $T$ is matched to $S$ if $s_{S\to T}<0.6$; the rate
+counts SimTracksters that match more than one reconstructed Trackster. For the
+merge rate, $S$ is matched to $T$ if $s_{T\to S}<0.6$; the rate is defined on
+reconstructed Tracksters, binned by reconstructed R, and counts T that have
+ more than one S matching. The formal definitions are
 \begin{equation}
   D(B)=\frac{N_S(B;\ \#\{T:s_{S\to T}<0.6\}\geq2)}{N_S(B)},
   \label{eq:duplicaterate}
@@ -41,5 +47,5 @@ fragmentation; it is a caveat revisited in the two-shower study.
 Making the merge, duplicate and other score thresholds configurable, displacement and timing observables, and a later refactoring that added
 two-dimensional metrics in $\R$ and a second
 variable, went into CMSSW pull requests
-\href{https://github.com/cms-sw/cmssw/pull/51510}{\#51510} and
-\href{https://github.com/cms-sw/cmssw/pull/51565}{\#51565}.
+\#51510~\cite{DoljaninPR51510} and
+\#51565~\cite{DoljaninPR51565}.

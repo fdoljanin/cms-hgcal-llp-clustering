@@ -5,15 +5,15 @@ As mentioned before, we chose to study displaced photons due to their shower sim
 \href{https://github.com/cms-sw/cmssw/pull/51006}{\#51006}); my contribution was
 to test and improve it---modifying its sampling and configuration, correcting the
 production timing, and updating the beamspot choice---done in pull request
-\href{https://github.com/cms-sw/cmssw/pull/51489}{\#51489}.
+\#51489~\cite{DoljaninPR51489}.
 
-Photons are inserted immediately before HGCAL, so they do not convert or shower
+Photons are produced immediately in front of HGCAL, so they do not convert or shower
 in the tracker. This isolates energy response to HGCAL. The gun is a controlled test of the reconstruction geometry, not a simulation of
 a full LLP production and decay.
 
 \subsection{Trajectory geometry}
 
-The gun samples an origin in the plane $z=0$,
+The gun samples the origin in the plane $z=0$,
 \begin{equation}
   \mathbf{x}_0=(\R\cos\phi_0,\R\sin\phi_0,0),
 \end{equation}
@@ -23,12 +23,14 @@ and azimuth $\phi_p$ starts from this origin, and the photon is created
 where the line crosses a \emph{production plane} near the HGCAL front face
 ($z\simeq\SI{319}{cm}$); an optional \emph{target plane} near the back of the
 electromagnetic calorimeter can constrain a second annular acceptance so that the
-trajectory fully goes through the calorimeter volume.
+trajectory remains within the calorimeter volume. This helps ensure transverse
+shower containment, so measurements of reconstruction performance are not
+affected by energy leakage. Longitudinal containment is
+ensured by the calorimeter depth in radiation lengths.
 
 To keep the requested displacement distribution unbiased, the gun holds the
-sampled origin fixed and constructs the allowed polar-angle intervals
-analytically before sampling $\theta$, rather than discarding whole trials that
-miss a surface. It samples $\R$ uniformly, giving equal populations per
+sampled origin fixed and after choosing $\R$ it constructs the allowed polar-angle intervals
+analytically before sampling $\theta$. It samples $\R$ uniformly, giving equal populations per
 displacement bin, and offers either a uniform total-energy or a uniform
 transverse-momentum distribution. Sampling $E$ directly keeps the energy
 distribution independent of the accepted direction, which is useful when
@@ -36,15 +38,24 @@ isolating displacement effects.
 
 \subsection{Timing, energy and beamspot corrections}
 
-Validating the pointing limit $\R=0$ against the existing CloseBy gun exposed three issues, all now fixed. First,
-the original gun assigned $t=0$ at the production point which caused energy reconstruction issues; the corrected version
-assigns the physical flight time,
+Validating the pointing limit $\R=0$ against the existing CloseBy gun exposed three issues, all now fixed. First, the original gun assigned $t=0$ to a photon created in front of
+HGCAL, ignoring the flight time required to reach that point. Its signals
+therefore arrived about $\SI{11}{ns}$ earlier than a particle travelling at the
+speed of light from the IP could reach the calorimeter. These arrival times are
+incompatible with the timing assumptions of hit reconstruction, so such
+signals could be rejected. The resulting reconstructed energy was reduced and
+fragmented across the shower, producing several Tracksters even at $\R=0$.
+This was therefore a consequence of the incorrect generation time, rather than
+a displacement-caused clustering failure. The corrected version assigns the
+physical flight time,
 \begin{equation}
   ct_{\mathrm{prod}}=|\mathbf{x}_0|
        +\frac{|\mathbf{x}_{\mathrm{prod}}-\mathbf{x}_0|}{\beta},
   \qquad \beta=\frac{|\mathbf{p}|}{E}.
   \label{eq:guntime}
 \end{equation}
+For photons, $\beta=1$, so at $\R=0$ this reduces to the ordinary
+$\sim\SI{11}{ns}$ flight time to the production plane.
 Second, the gun sampled $p_T$ rather than energy, which produced much higher
 energies at small momentum $\theta$ ($E=p_T/\sin\theta$); direct energy sampling
 was added. Third, the workflow used the

@@ -1,0 +1,57 @@
+\begin{thebibliography}{1}
+
+\bibitem{HLLHC}
+G.~Apollinari, I.~B{\'e}jar Alonso, O.~Br{\"u}ning, P.~Fessia, M.~Lamont, L.~Rossi, and L.~Tavian.
+\newblock {High-Luminosity Large Hadron Collider (HL-LHC): Technical Design Report}.
+\newblock Technical Report CERN-2020-010, CERN, 2020.
+\newblock \url{https://doi.org/10.23731/CYRM-2020-0010}.
+
+\bibitem{HGCALTDR}
+{CMS Collaboration}.
+\newblock {The Phase-2 Upgrade of the CMS Endcap Calorimeter}.
+\newblock Technical Report CERN-LHCC-2017-023, CMS-TDR-019, CERN, 2017.
+\newblock \url{https://doi.org/10.17181/CERN.IV8M.1JY2}.
+
+\bibitem{Rovere2020clue}
+Marco Rovere, Ziheng Chen, Antonio Di~Pilato, Felice Pantaleo, and Chris Seez.
+\newblock {CLUE: A Fast Parallel Clustering Algorithm for High Granularity Calorimeters in High-Energy Physics}.
+\newblock {\em Frontiers in Big Data}, 3:591315, 2020.
+\newblock \url{https://doi.org/10.3389/fdata.2020.591315}.
+
+\bibitem{TICL}
+Felice Pantaleo and Marco Rovere.
+\newblock {The Iterative Clustering framework for the CMS HGCAL Reconstruction}.
+\newblock {\em Journal of Physics: Conference Series}, 2438:012096, 2023.
+\newblock \url{https://doi.org/10.1088/1742-6596/2438/1/012096}.
+
+\bibitem{LLPreview}
+Juliette Alimena et~al.
+\newblock {Searching for long-lived particles beyond the Standard Model at the Large Hadron Collider}.
+\newblock {\em J. Phys. G}, 47(9):090501, 2020.
+\newblock \url{https://doi.org/10.1088/1361-6471/ab4574}.
+
+\bibitem{DoljaninPR51510}
+Frane Doljanin.
+\newblock {HGCal displaced gun validations}.
+\newblock CMSSW pull request \#51510, 2026.
+\newblock \url{https://github.com/cms-sw/cmssw/pull/51510}.
+
+\bibitem{DoljaninPR51489}
+Frane Doljanin.
+\newblock {Improving DisplacedParticleGun}.
+\newblock CMSSW pull request \#51489, 2026.
+\newblock \url{https://github.com/cms-sw/cmssw/pull/51489}.
+
+\bibitem{DoljaninPR51565}
+Frane Doljanin.
+\newblock {HGCal validation histograms refactor}.
+\newblock CMSSW pull request \#51565, 2026.
+\newblock \url{https://github.com/cms-sw/cmssw/pull/51565}.
+
+\bibitem{CMSSWCLUE3D}
+{CMS Collaboration}.
+\newblock {PatternRecognitionbyCLUE3D: CLUE3D implementation in CMSSW}.
+\newblock CMSSW source code, 2026.
+\newblock \url{https://github.com/cms-sw/cmssw/blob/fdf6ff30b0b8564968dd4ae2004db5467be52eea/RecoHGCal/TICL/plugins/PatternRecognitionbyCLUE3D.cc}.
+
+\end{thebibliography}
