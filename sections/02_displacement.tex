@@ -14,15 +14,26 @@ carry no truth information.
   travel radially from the interaction point with $\alphainc=0$; displaced
   photons (green) originate at a transverse distance $\R$ from the beamline at
   $z=0$ and hit the calorimeter with $\alphainc>0$. The two green
-  trajectories show that a single $\R$ can give different angles $\alphainc$.}
+  trajectories show that a single $\R$ can give different angles $\alphainc$.
+  Figure from Ref.~\cite{Alves2026LLPHGCAL}.}
   \label{fig:geometry}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=\linewidth]{figures/CMS-TDR-019_Figure-1.6_HGCAL-longitudinal-cross-section.png}
+  \caption{Longitudinal cross section of the upper half of one HGCAL endcap,
+  showing the electromagnetic (CE-E) and hadronic (CE-H) compartments.
+  Figure from Ref.~\cite{HGCALTDR}, Fig.~1.6.}
+  \label{fig:hgcal-layout}
 \end{figure}
 
 Consider a photon that is created at
 $\mathbf{x}_v=(x_v,y_v,z_v)$ and travels in a straight line to the HGCAL front
 face, located at $z\simeq\SI{321}{cm}$ from the interaction
 point (Fig.~\ref{fig:geometry}). HGCAL has two endcaps; in this report,
-we consider the positive-$z$ endcap. We measure its displacement by two
+we consider the positive-$z$ endcap. Its layout is illustrated in
+Fig.~\ref{fig:hgcal-layout}. We measure the photon's displacement by two
 quantities:
 \begin{itemize}
   \item the \textbf{displacement radius} \R{}, defined as the transverse
@@ -118,6 +129,8 @@ estimators:
 Figure~\ref{fig:methods} compares these methods for the leading Trackster per
 event. The PCA variants are already the narrowest; because clean PCA is robust
 and implemented in CMSSW, it was adopted.
+Window barycentres may be faster to compute than PCA, but runtime benchmarks
+would be needed to compare the methods at similar spatial resolution.
 
 The resolution improves with Trackster energy, as a more energetic shower gives
 the PCA more LayerClusters to fit its axis; $\sim\SI{10}{cm}$ is

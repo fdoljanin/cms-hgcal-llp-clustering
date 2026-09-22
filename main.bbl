@@ -12,6 +12,12 @@ G.~Apollinari, I.~B{\'e}jar Alonso, O.~Br{\"u}ning, P.~Fessia, M.~Lamont, L.~Ros
 \newblock Technical Report CERN-LHCC-2017-023, CMS-TDR-019, CERN, 2017.
 \newblock \url{https://doi.org/10.17181/CERN.IV8M.1JY2}.
 
+\bibitem{Cuisset2026HGCAL}
+Th\'eo Cuisset.
+\newblock {Reconstruction developments in HGCAL}.
+\newblock CMS Week, HGCAL DPG session, CERN, 2026. For the TICL team, slides 17 and 3.
+\newblock \url{https://indico.cern.ch/event/1691235/contributions/7121660/attachments/3289767/5881954/HGCAL%20DPG%20reco%20news%20-%20CMS%20Week%20June26%20(1).pdf}.
+
 \bibitem{Rovere2020clue}
 Marco Rovere, Ziheng Chen, Antonio Di~Pilato, Felice Pantaleo, and Chris Seez.
 \newblock {CLUE: A Fast Parallel Clustering Algorithm for High Granularity Calorimeters in High-Energy Physics}.
@@ -29,6 +35,12 @@ Juliette Alimena et~al.
 \newblock {Searching for long-lived particles beyond the Standard Model at the Large Hadron Collider}.
 \newblock {\em J. Phys. G}, 47(9):090501, 2020.
 \newblock \url{https://doi.org/10.1088/1361-6471/ab4574}.
+
+\bibitem{Alves2026LLPHGCAL}
+Bruno Alves et~al.
+\newblock {HGCAL clustering performance of displaced photons from long-lived particles}.
+\newblock TICL Reconstruction Working Meeting, CERN, 28 May 2026, slide 8.
+\newblock \url{https://indico.cern.ch/event/1639383/sessions/645073/attachments/3283587/5868617/LLPsInHGCAL.pdf}.
 
 \bibitem{DoljaninPR51510}
 Frane Doljanin.

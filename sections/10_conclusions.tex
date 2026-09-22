@@ -1,8 +1,9 @@
 \section{Conclusions and next steps}
 \label{sec:conclusions}
 
-This project looked at how HGCAL clustering behaves when photons no
-longer point back to the interaction point, and which specific features cost performance. Along the way I improved the displaced-particle gun, added displacement observables
+This project studied how well \cluethreed{} reconstructs displaced photons
+and why its performance changes when their showers do not point back to the
+interaction point. Along the way I improved the displaced-particle gun, added displacement observables
 to the CMSSW validation, and produced the two-dimensional performance maps used throughout. Comparing
 shower direction estimators gave an approximately \SI{10}{cm} resolution on the
 back-extrapolated displacement of the most energetic Trackster.
@@ -30,15 +31,15 @@ displacement R cannot be read as a production radius.
 Comparing metrics through \cluestering{} showed both promise and limits.
 Several Cartesian configurations stay efficient on single displaced photons
 across the whole scan, including in pileup, but the Euclidean ones merge the
-\SI{4}{cm} photon pair heavily. The gnomonic configuration was the
-most encouraging, giving higher efficiency than default \cluethreed{} at large
-displacement while keeping a low merge rate on the two-photon test, though this
-still needs further studies and its EE-only
-coverage is why its inclusive pileup efficiency looks so low.
+\SI{4}{cm} photon pair heavily. The tested gnomonic configuration improved
+efficiency over default \cluethreed{} at large displacement while keeping the
+two-photon merge rate low. Further tuning is needed before deciding which
+approach performs best overall. Its EE-only coverage may also contribute
+to its low inclusive pileup efficiency.
 
 The natural next step is to tune coordinates, metric weights, distance scales
 and density thresholds together, judging them against energy recovery,
-fragmentation and cross-shower mixing at once. It also needs to be tested on more
+fragmentation and cross-shower mixing at once. \cluestering{} also needs to be tested on more
 realistic inputs: the controlled photons here are injected just before HGCAL,
 so they say nothing about real LLP decays. The
 generation and validation tools built for this study give a starting point for
