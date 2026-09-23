@@ -38,6 +38,23 @@ isolating displacement effects.
 
 \subsection{Timing, energy and beamspot corrections}
 
+\begin{figure*}[!tp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+\cmsplot[width=\linewidth]{figures/gun_comparison_pt.png}
+    \caption{Displaced gun sampling $p_T$.}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \cmsplot[width=\linewidth]{figures/gun_comparison_energy.png}
+    \caption{Displaced gun sampling energy.}
+  \end{subfigure}
+  \caption{Pointing control ($\R=0$): mean reconstructed Tracksters per event
+  versus generated-photon $\eta$ for the displaced and CloseBy guns. Lower panels
+  show the displaced-to-CloseBy ratio. The plots compare the sampling choices;
+  they do not isolate the timing or beamspot corrections.}
+  \label{fig:guncomparison}
+\end{figure*}
+
 Validating the pointing limit $\R=0$ against the existing CloseBy gun exposed three issues, all now fixed. First, the original gun assigned $t=0$ to a photon created in front of
 HGCAL, ignoring the flight time required to reach that point. Its signals
 therefore arrived about $\SI{11}{ns}$ earlier than a particle travelling at the
@@ -60,4 +77,6 @@ Second, the gun sampled $p_T$ rather than energy, which produced much higher
 energies at small momentum $\theta$ ($E=p_T/\sin\theta$); direct energy sampling
 was added. Third, the workflow used the
 \texttt{DBrealisticHLLHC} beamspot smearing and was switched to the fixed \texttt{CloseBy} production.
-Together these corrections reproduce the CloseBy response at $\R=0$.
+With energy sampling, the displaced-gun multiplicity agrees with CloseBy over
+most of the displayed $\eta$ range (Fig.~\ref{fig:guncomparison}); the
+highest-$\eta$ bins remain less certain.

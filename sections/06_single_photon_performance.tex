@@ -32,11 +32,11 @@ reducing each shower to a pass or fail, and does not have a threshold.
 \begin{figure*}[!tp]
   \centering
   \begin{subfigure}[t]{0.54\textwidth}
-    \includegraphics[width=\linewidth]{figures/singlephoton_efficiency_thresholds.png}
+\cmsplot[width=\linewidth]{figures/singlephoton_efficiency_thresholds.png}
     \caption{Efficiency for several shared-energy requirements}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.44\textwidth}
-    \includegraphics[width=\linewidth]{figures/singlephoton_mean_fraction.png}
+    \cmsplot[width=\linewidth]{figures/singlephoton_mean_fraction.png}
     \caption{Mean largest shared-energy fraction}
   \end{subfigure}
   \caption{Single-photon reconstruction without pileup. (a) Efficiency for
@@ -60,7 +60,7 @@ efficiency threshold. We will investigate real cause to efficiency loss and plat
 
 \begin{figure}[!tp]
   \centering
-  \includegraphics[width=\linewidth]{figures/singlephoton_split_R297_rz.png}
+  \cmsplot[width=\linewidth]{figures/singlephoton_split_R297_rz.png}
   \caption{A single photon at $\R\simeq\SI{297}{cm}$ split into five
   reconstructed Tracksters, shown as $r/z$ versus layer index. Colour identifies
   the reconstructed Trackster and marker size the energy; grey markers are
@@ -82,7 +82,7 @@ scalar $\R$ does not create the feature either.
 
 \begin{figure}[!tp]
   \centering
-  \includegraphics[width=\linewidth,trim=420bp 335bp 417bp 89bp,clip]{figures/singlephoton_neighbourhood_R297.png}
+  \cmsplot[width=\linewidth,trim=420bp 335bp 417bp 89bp,clip]{figures/singlephoton_neighbourhood_R297.png}
   \caption{A neighbourhood in the full projected coordinates for the
   $\R\simeq\SI{297}{cm}$ event previously shown in
   Fig.~\ref{fig:singlephotonsplit}. The star marks the layer-51 core of a new
@@ -93,12 +93,12 @@ scalar $\R$ does not create the feature either.
 \begin{figure*}[!tp]
   \centering
   \begin{subfigure}[t]{0.49\textwidth}
-    \includegraphics[width=\linewidth,trim=0 0 0 31bp,clip]{figures/singlephoton_pair_distance.png}
+    \cmsplot[width=\linewidth,trim=0 0 0 31bp,clip]{figures/singlephoton_pair_distance.png}
     \caption{Full projected distance for core-LC pairs}
     \label{fig:singlephoton-pair-distance}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.49\textwidth}
-    \includegraphics[width=\linewidth]{figures/singlephoton_seed_energy.png}
+    \cmsplot[width=\linewidth]{figures/singlephoton_seed_energy.png}
     \caption{Reconstructed energy in additional seeded fragments}
     \label{fig:singlephoton-seed-energy}
   \end{subfigure}
@@ -175,11 +175,11 @@ outside the critical circle, so two pieces of one continuous shower fall are not
 \begin{figure*}[!tp]
   \centering
   \begin{subfigure}[t]{0.49\textwidth}
-    \includegraphics[width=\linewidth]{figures/singlephoton_ablation_pair_distance.png}
+    \cmsplot[width=\linewidth]{figures/singlephoton_ablation_pair_distance.png}
     \caption{Full projected distance for core-LC pairs}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.49\textwidth}
-    \includegraphics[width=\linewidth]{figures/singlephoton_ablation_seed_energy.png}
+    \cmsplot[width=\linewidth]{figures/singlephoton_ablation_seed_energy.png}
     \caption{Reconstructed energy in additional seeded fragments}
   \end{subfigure}
   \caption{The diagnostics of Fig.~\ref{fig:singlephotongaps} for

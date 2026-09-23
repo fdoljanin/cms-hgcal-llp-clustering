@@ -3,7 +3,7 @@
 
 We will study how shower energy is distributed among reconstructed objects and contamination when several showers overlap.
 We use the HGCAL validation framework, which associates reconstructed
-Tracksters to SimTracksters by shared LayerCluster energy and from that defines efficiency, duplicate and merge rates.
+Tracksters to SimTracksters by shared LayerCluster energy and from that defines efficiency, duplicate, merge and fake rates.
 
 The association compares the per-LayerCluster energies of a SimTrackster $S$ and
 a reconstructed Trackster $T$. The shared energy $E_{\mathrm{shared}}(S,T)$ is
@@ -14,7 +14,7 @@ $s_{S\to T}$ and $s_{T\to S}$ (weighting squared energies, lower being better),
 separately penalize SimTrackster energy missing from $T$ and reconstructed energy
 in $T$ missing in $S$.
 
-\subsection{Efficiency, duplicate rate and merge rate}
+\subsection{Efficiency, duplicate, merge and fake rates}
 
 For efficiency, a reconstructed Trackster $T$ is matched to a SimTrackster $S$
 if $T$ holds more than half of $S$'s energy, i.e. if $f_{ST}>0.5$. A
@@ -39,6 +39,10 @@ reconstructed Tracksters, binned by reconstructed R, and counts T that have
   M(B)=\frac{N_T(B;\ \#\{S:s_{T\to S}<0.6\}\geq2)}{N_T(B)}.
   \label{eq:mergerate}
 \end{equation}
+A reconstructed Trackster is fake if no SimTrackster matches it with
+$s_{T\to S}<0.6$; the fake rate is the fraction of reconstructed Tracksters
+that are fake. This matters especially with pileup: an algorithm can recover
+the signal photon while also producing many unmatched Tracksters.
 Small fragments can fail
 this cut, so a low duplicate or merge rate does not by itself exclude
 fragmentation; it is a caveat revisited in the two-shower study.

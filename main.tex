@@ -68,6 +68,18 @@
 \newcommand{\cluethreed}{CLUE3D}
 \newcommand{\cluestering}{CLUEstering}
 
+% Mark plots made from the simulated samples used in this report.
+\newsavebox{\cmsplotbox}
+\newcommand{\cmsplot}[2][]{%
+  \begingroup
+  \sbox{\cmsplotbox}{\includegraphics[#1]{#2}}%
+  \usebox{\cmsplotbox}%
+    \llap{\raisebox{\dimexpr\ht\cmsplotbox+0.1em\relax}{%
+      \makebox[\wd\cmsplotbox][l]{%
+        \bfseries\scriptsize CMS\enspace\normalfont\itshape Private Work}}}%
+  \endgroup
+}
+
 \title{\vspace{-2em}\bfseries Reconstruction of long-lived particles\\ with the CLUE algorithm in CMS}
 \author{Frane Doljanin\\
   \small\textit{CERN Summer Student Programme}\\
